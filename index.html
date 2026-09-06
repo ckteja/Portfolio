@@ -60,7 +60,8 @@
     --e-out:cubic-bezier(.16,1,.3,1);
     --e-io:cubic-bezier(.65,0,.35,1);
     --t1:140ms; --t2:280ms; --t3:480ms;
-    --maxw:1140px;
+    --maxw:1080px;
+    --measure:700px;
     --f-display:"Newsreader",Georgia,serif;
     --f-body:"IBM Plex Sans",system-ui,sans-serif;
     --f-mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -70,7 +71,7 @@
   html{scroll-behavior:smooth}
   body{
     margin:0;background:var(--ground);color:var(--body);
-    font-family:var(--f-body);font-size:17px;line-height:1.7;
+    font-family:var(--f-body);font-size:17px;line-height:1.62;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
   a{color:inherit;text-decoration:none}
@@ -96,7 +97,7 @@
   @media(max-width:900px){.nav-links{display:none}}
 
   /* masthead */
-  .masthead{padding:72px 0 60px;border-bottom:1px solid var(--line)}
+  .masthead{padding:52px 0 42px;border-bottom:1px solid var(--line)}
   .mast{display:grid;grid-template-columns:1.22fr .78fr;gap:3.4rem;align-items:center}
   .masthead .frame{max-width:375px;margin-left:auto}
   .eyebrow{font-family:var(--f-mono);font-size:.73rem;letter-spacing:.13em;text-transform:uppercase;color:var(--sig);margin-bottom:1.4rem;display:flex;align-items:center;gap:.7rem}
@@ -121,7 +122,6 @@
     .proof span{font-size:.6rem;line-height:1.35;letter-spacing:.05em}
     .masthead .cta{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
     .masthead .cta .btn{text-align:center}
-    .masthead .cta .btn:first-child{grid-column:1/-1}
   }
   .cta{display:flex;flex-wrap:wrap;gap:.65rem}
   .btn{font-family:var(--f-mono);font-size:.79rem;padding:.7rem 1.12rem;border-radius:2px;border:1px solid var(--line-2);color:var(--ink);background:transparent;transition:border-color .18s,color .18s}
@@ -159,7 +159,7 @@
   }
 
   /* facts */
-  .facts{border-bottom:1px solid var(--line);padding:24px 0}
+  .facts{border-bottom:1px solid var(--line);padding:22px 0}
   .facts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
   .fact .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:.35rem}
   .fact .v{font-size:.94rem;color:var(--ink)}
@@ -167,64 +167,65 @@
 
   /* frame-numbered sections */
   section{border-bottom:1px solid var(--line)}
-  .sec{display:grid;grid-template-columns:190px 1fr;gap:3.2rem;padding:var(--pad,72px) 0}
+  .sec{display:grid;grid-template-columns:150px minmax(0,var(--measure));gap:2.5rem;
+       padding-top:var(--pad,48px);padding-bottom:var(--pad,48px)}
   .marker{position:sticky;top:104px}
   .marker .fnum{font-family:var(--f-mono);font-size:.7rem;color:var(--sig);letter-spacing:.1em;display:block}
   .marker .fname{font-family:var(--f-mono);font-size:.73rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);display:block;margin-top:.45rem}
   .marker .tick{margin-top:.9rem;height:1px;width:46px;background:var(--line-2)}
-  h2{font-family:var(--f-display);font-weight:500;font-size:clamp(1.6rem,3vw,2.1rem);line-height:1.2;letter-spacing:-.015em;color:var(--ink);margin:0 0 1.5rem;text-wrap:balance}
-  .prose p{margin:0 0 1.1rem;max-width:64ch}
+  h2{font-family:var(--f-display);font-weight:500;font-size:clamp(1.6rem,3vw,2.1rem);line-height:1.2;letter-spacing:-.015em;color:var(--ink);margin:0 0 1.15rem;max-width:var(--measure);text-wrap:balance}
+  .prose p{margin:0 0 .9rem;max-width:var(--measure)}
   .prose p:last-child{margin-bottom:0}
   .prose strong{color:var(--ink);font-weight:600}
   @media(max-width:880px){
-    .sec{grid-template-columns:1fr;gap:1.3rem;padding:54px 0}
+    .sec{grid-template-columns:1fr;gap:1.3rem;padding-top:54px;padding-bottom:54px}
     .marker{position:static;display:flex;align-items:baseline;gap:.8rem}
     .marker .fname{margin-top:0}
     .marker .tick{display:none}
   }
 
   /* publications */
-  ol.refs{list-style:none;counter-reset:r;margin:0;padding:0}
-  ol.refs li{counter-increment:r;position:relative;padding:1.5rem 0 1.5rem 3rem;border-top:1px solid var(--line)}
+  ol.refs{list-style:none;counter-reset:r;margin:0;padding:0;max-width:var(--measure)}
+  ol.refs li{counter-increment:r;position:relative;padding:1.15rem 0 1.15rem 2.7rem;border-top:1px solid var(--line)}
   ol.refs li:first-child{border-top:0;padding-top:.2rem}
   ol.refs li::before{content:"[" counter(r) "]";position:absolute;left:0;top:1.55rem;font-family:var(--f-mono);font-size:.8rem;color:var(--sig)}
   ol.refs li:first-child::before{top:.25rem}
-  .rt{font-family:var(--f-display);font-size:1.13rem;font-weight:500;color:var(--ink);line-height:1.35;margin:0 0 .4rem}
-  .rm{font-size:.88rem;color:var(--muted);margin:0 0 .5rem}
+  .rt{font-family:var(--f-display);font-size:1.13rem;font-weight:500;color:var(--ink);line-height:1.35;margin:0 0 .4rem;max-width:calc(var(--measure) - 2.7rem)}
+  .rm{font-size:.88rem;color:var(--muted);margin:0 0 .5rem;max-width:calc(var(--measure) - 2.7rem)}
   .rm em{color:var(--body)}
-  .rd{font-size:.96rem;margin:0 0 .6rem;max-width:62ch}
+  .rd{font-size:.96rem;margin:0 0 .6rem;max-width:calc(var(--measure) - 2.7rem)}
   .rl{font-family:var(--f-mono);font-size:.74rem;color:var(--sig);border-bottom:1px solid var(--line-2);transition:border-color .18s}
   .rl:hover{border-color:var(--sig)}
 
   /* work */
-  .proj{padding:1.9rem 0;border-top:1px solid var(--line)}
+  .proj{padding:1.35rem 0;border-top:1px solid var(--line);max-width:var(--measure)}
   .proj:first-child{border-top:0;padding-top:0}
   .ptop{display:flex;justify-content:space-between;align-items:baseline;gap:1.4rem;margin-bottom:.5rem;flex-wrap:wrap}
   .proj h3{font-family:var(--f-display);font-weight:500;font-size:1.26rem;color:var(--ink);margin:0;line-height:1.3}
   .kind{font-family:var(--f-mono);font-size:.7rem;color:var(--dim);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
-  .proj p{font-size:.99rem;margin:0 0 1rem;max-width:64ch}
-  .metrics{display:flex;flex-wrap:wrap;gap:2.1rem;margin-bottom:.9rem}
+  .proj p{font-size:.99rem;margin:0 0 .8rem;max-width:var(--measure)}
+  .metrics{display:flex;flex-wrap:wrap;gap:2.1rem;margin-bottom:.75rem}
   .metric .v{font-family:var(--f-display);font-size:1.48rem;font-weight:600;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
   .metric .k{font-family:var(--f-mono);font-size:.68rem;color:var(--dim);margin-top:.3rem;letter-spacing:.03em}
-  .stack{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);line-height:1.75}
+  .stack{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);line-height:1.75;max-width:var(--measure)}
   .stack b{color:var(--dim);font-weight:400;letter-spacing:.08em;text-transform:uppercase}
   .repo{display:inline-flex;font-family:var(--f-mono);font-size:.74rem;color:var(--sig);margin-right:1.3rem;border-bottom:1px solid transparent;transition:border-color .18s}
   .repo:hover{border-color:var(--sig)}
 
   /* skills */
-  .skills{display:grid;grid-template-columns:repeat(2,1fr);gap:1.7rem 3rem}
+  .skills{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem 2.6rem;max-width:var(--measure)}
   .skill h3{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin:0 0 .45rem;font-weight:400}
   .skill p{font-size:.97rem;color:var(--ink);margin:0;line-height:1.6}
   @media(max-width:640px){.skills{grid-template-columns:1fr;gap:1.3rem}}
 
   /* experience */
-  .role{display:grid;grid-template-columns:154px 1fr;gap:2rem;padding:1.7rem 0;border-top:1px solid var(--line)}
+  .role{display:grid;grid-template-columns:140px 1fr;gap:1.8rem;padding:1.25rem 0;border-top:1px solid var(--line);max-width:var(--measure)}
   .role:first-child{border-top:0;padding-top:0}
   .role .when{font-family:var(--f-mono);font-size:.76rem;color:var(--dim);line-height:1.65}
-  .role h3{font-family:var(--f-display);font-weight:500;font-size:1.14rem;color:var(--ink);margin:0 0 .15rem}
-  .role .org{font-size:.91rem;color:var(--sig);margin:0 0 .7rem}
+  .role h3{font-family:var(--f-display);font-weight:500;font-size:1.14rem;color:var(--ink);margin:0 0 .15rem;max-width:calc(var(--measure) - 140px - 1.8rem)}
+  .role .org{font-size:.91rem;color:var(--sig);margin:0 0 .7rem;max-width:calc(var(--measure) - 140px - 1.8rem)}
   .role ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.4rem}
-  .role li{font-size:.96rem;padding-left:1.1rem;position:relative;max-width:62ch}
+  .role li{font-size:.96rem;padding-left:1.1rem;position:relative;max-width:calc(var(--measure) - 140px - 1.8rem)}
   .role li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;background:var(--line-2)}
   @media(max-width:640px){.role{grid-template-columns:1fr;gap:.5rem}}
 
@@ -235,12 +236,12 @@
   .foot a:hover{color:var(--sig);border-color:var(--sig)}
 
   /* live demo */
-  .demo-grid{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:2rem;align-items:start}
+  .demo-grid{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:1.8rem;align-items:start;max-width:var(--measure)}
   @media(max-width:880px){.demo-grid{grid-template-columns:1fr;gap:1.4rem}}
   .canvas-wrap{position:relative;line-height:0;background:var(--panel-2);min-height:120px}
   .canvas-wrap{height:300px;display:grid;place-items:center;overflow:hidden}
   .canvas-wrap canvas{max-width:100%;max-height:300px;width:auto;height:auto;object-fit:contain;display:block}
-  .demo-side .lead{font-size:.95rem;line-height:1.6;margin:0 0 .9rem;color:var(--body)}
+  .demo-side .lead{font-size:.95rem;line-height:1.6;margin:0 0 .9rem;color:var(--body);max-width:var(--measure)}
   .demo-ctl{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.85rem}
   .demo-ctl .btn{cursor:pointer;font-size:.76rem;padding:.6rem .95rem}
   .demo-ctl .btn[disabled]{opacity:.45;cursor:not-allowed}
@@ -305,7 +306,7 @@
         cursor:pointer;transition:border-color .18s,color .18s}
   .cite:hover{border-color:var(--sig);color:var(--sig)}
   .cite.done{border-color:var(--sig);color:var(--sig)}
-  .tbl-wrap{overflow-x:auto;margin-top:1.4rem;border:1px solid var(--line)}
+  .tbl-wrap{overflow-x:auto;margin-top:1.4rem;border:1px solid var(--line);max-width:var(--measure)}
   table.res{border-collapse:collapse;width:100%;min-width:600px;font-size:.88rem}
   table.res th{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;
                color:var(--dim);text-align:left;padding:.75rem .9rem;border-bottom:1px solid var(--line-2);font-weight:400}
@@ -384,7 +385,8 @@
   /* --- mobile hardening --- */
   .sec>*,.mast>*,.demo-grid>*,.role>*,.facts-grid>*,.skills>*{min-width:0}
   .proj,.prose,.demo-side{min-width:0}
-  figure.arch,.tbl-wrap,.canvas-wrap{max-width:100%}
+  .canvas-wrap{max-width:100%}
+  figure.arch,.tbl-wrap{max-width:min(100%,var(--measure))}
   img,canvas,svg{max-width:100%}
 
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -400,7 +402,7 @@
     .wrap{padding:0 20px}
     .strip-in{padding:.5rem 16px;gap:.4rem}
     .cell{font-size:.66rem;padding:.42rem .62rem}
-    .sec{padding:46px 0}
+    .sec{padding-top:36px;padding-bottom:36px}
     .masthead{padding:44px 0 40px}
     .frame{max-width:100%}
     .canvas-wrap{height:250px}
@@ -469,10 +471,10 @@
   <div class="wrap nav-in">
     <a class="mark" href="#top">Chandra Kiran Teja</a>
     <div class="nav-links">
-      <a href="#demo"><span class="n">01</span>Demo</a>
-      <a href="#about"><span class="n">02</span>About</a>
-      <a href="#venture"><span class="n">03</span>Venture</a>
-      <a href="#research"><span class="n">04</span>Research</a>
+      <a href="#about"><span class="n">01</span>About</a>
+      <a href="#venture"><span class="n">02</span>Venture</a>
+      <a href="#research"><span class="n">03</span>Research</a>
+      <a href="#demo"><span class="n">04</span>Demo</a>
       <a href="#work"><span class="n">05</span>Work</a>
       <a href="#skills"><span class="n">06</span>Skills</a>
       <a href="#experience"><span class="n">07</span>Experience</a>
@@ -495,6 +497,7 @@
       <p class="mast-note lift" style="--d:300ms">Currently building <strong style="color:var(--ink);font-weight:600">i-Brick</strong>, a building-moisture sensing venture entering pilot. Seeking working-student and Master's thesis opportunities in applied ML and computer vision.</p>
       <div class="cta lift" style="--d:360ms">
         <a class="btn solid" href="#work">Selected work</a>
+        <a class="btn" href="#demo">See it run ↓</a>
         <a class="btn" href="ChandraKiranTeja_Resume.pdf" target="_blank" rel="noopener">Download CV</a>
         <a class="btn" href="mailto:chandrakiranteja@gmail.com">Contact me</a>
       </div>
@@ -525,53 +528,9 @@
   </div>
 </div>
 
-<section id="demo" style="--pad:56px">
-  <div class="wrap sec">
-    <div class="marker"><span class="fnum">FRAME 01</span><span class="fname">Live demo</span><div class="tick"></div></div>
-    <div class="reveal">
-      <h2>Run a detector, here, now.</h2>
-      <div class="demo-grid">
-        <figure class="frame" style="margin:0">
-          <div class="frame-bar"><span id="dmName">portrait.jpg</span><span class="rec" id="dmTime">00:00:00:02</span></div>
-          <div class="canvas-wrap"><canvas id="dmCanvas" width="520" height="650"></canvas></div>
-          <div class="frame-foot"><span>detections <b id="dmCount">–</b></span><span id="dmMs">idle</span></div>
-        </figure>
-        <div class="demo-side">
-          <p class="lead">The boxes on my portrait are drawn by hand. These aren't. Detection runs in your browser, on your device. Switch on the camera and a tracker takes over: each object keeps an identity between frames, trails show where it has been, and boxes fade rather than vanish through brief occlusion. Nothing is uploaded.</p>
-          <div class="demo-ctl">
-            <button class="btn solid" id="dmRun" type="button">Run detection</button>
-            <button class="btn" id="dmCam" type="button">Live camera</button>
-            <button class="btn" id="dmPick" type="button">Your own image</button>
-          </div>
-          <input type="file" id="dmFile" accept="image/*" hidden>
-          <video id="dmVideo" playsinline muted aria-hidden="true"></video>
-          <div class="drop" id="dmDrop">or drop an image here</div>
-          <div class="status" id="dmStatus" role="status" aria-live="polite">Ready. COCO-SSD, 80 classes.</div>
-
-          <div class="telem" id="dmTelem">
-            <div class="telem-h">Inference telemetry</div>
-            <div class="telem-rows">
-              <div class="trow"><span>latency</span><b id="tLat">–</b></div>
-              <div class="trow"><span>fps</span><b id="tFps">–</b></div>
-              <div class="trow"><span>ids</span><b id="tTrk">–</b></div>
-              <div class="trow"><span>backend</span><b id="tBack">–</b></div>
-              <div class="trow"><span>model</span><b>SSD v2</b></div>
-              <div class="trow"><span>tracker</span><b>IoU assoc.</b></div>
-            </div>
-            <canvas id="tSpark" width="480" height="60" aria-hidden="true"></canvas>
-            <div class="telem-f">frame latency, last 60</div>
-          </div>
-
-          <ul class="det-list" id="dmOut"></ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section id="about">
   <div class="wrap sec">
-    <div class="marker"><span class="fnum">FRAME 02</span><span class="fname">About</span><div class="tick"></div></div>
+    <div class="marker"><span class="fnum">FRAME 01</span><span class="fname">About</span><div class="tick"></div></div>
     <div class="prose reveal">
       <h2>Research-driven, deployment-minded.</h2>
       <p>My work sits where a model stops being a notebook result and starts being a system. That means the unglamorous parts: evaluating honestly, cutting a model down to fit the hardware it will actually run on, and instrumenting it so you know when it degrades.</p>
@@ -584,10 +543,10 @@
 
 <section id="venture">
   <div class="wrap sec">
-    <div class="marker"><span class="fnum">FRAME 03</span><span class="fname">Venture</span><div class="tick"></div></div>
+    <div class="marker"><span class="fnum">FRAME 02</span><span class="fname">Venture</span><div class="tick"></div></div>
     <div class="reveal">
       <h2>i-Brick: sensing the wall from the inside.</h2>
-      <p style="font-size:1.08rem;max-width:64ch">By the time a damp patch is visible on a wall, it has been growing for months. Damp is the most common building defect in Europe, and it is still diagnosed by eye, after the damage is done. I'm building i-Brick with a small team to move that diagnosis months earlier, while the fix is still ventilation rather than structural repair.</p>
+      <p style="font-size:1.08rem;max-width:var(--measure)">By the time a damp patch is visible on a wall, it has been growing for months. Damp is the most common building defect in Europe, and it is still diagnosed by eye, after the damage is done. I'm building i-Brick with a small team to move that diagnosis months earlier, while the fix is still ventilation rather than structural repair.</p>
       <p>Sensor nodes sit <strong>inside the wall build-up</strong> rather than sampling room air, so they measure what the structure is actually doing. They run autonomously through network outages and report when they reconnect. A risk engine turns the readings into <strong>one 0–100 score with plain-language reasoning</strong>, not a spreadsheet, delivered as a live dashboard, alerts, and engineer-ready reports.</p>
       <p>The design decision I care most about: when a condition hasn't been measured, the system reports it as <strong>unassessed</strong>. It never reports unmeasured as fine. Honest uncertainty is worth more than a confident number, particularly when an insurer or a housing provider is going to act on it.</p>
 
@@ -651,10 +610,10 @@
 
 <section id="research">
   <div class="wrap sec">
-    <div class="marker"><span class="fnum">FRAME 04</span><span class="fname">Research</span><div class="tick"></div></div>
+    <div class="marker"><span class="fnum">FRAME 03</span><span class="fname">Research</span><div class="tick"></div></div>
     <div class="reveal">
       <h2>Peer-reviewed publications</h2>
-      <p style="margin:0 0 1.6rem;max-width:62ch;color:var(--muted)">Three consecutive years at IEEE ICAECT, including presenting the work at the conference.</p>
+      <p style="margin:0 0 1.6rem;max-width:var(--measure);color:var(--muted)">Three consecutive years at IEEE ICAECT, including presenting the work at the conference.</p>
       <ol class="refs">
         <li>
           <p class="rt">DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos</p>
@@ -675,6 +634,50 @@
           <a class="rl" href="https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=Real-Time%20Human%20Tracking%20YOLO-NAS%20DeepSORT%20Fusion" target="_blank" rel="noopener">IEEE Xplore →</a><button class="cite" type="button" data-bib="p2023">cite</button>
         </li>
       </ol>
+    </div>
+  </div>
+</section>
+
+<section id="demo" style="--pad:56px">
+  <div class="wrap sec">
+    <div class="marker"><span class="fnum">FRAME 04</span><span class="fname">Live demo</span><div class="tick"></div></div>
+    <div class="reveal">
+      <h2>Run a detector, here, now.</h2>
+      <div class="demo-grid">
+        <figure class="frame" style="margin:0">
+          <div class="frame-bar"><span id="dmName">portrait.jpg</span><span class="rec" id="dmTime">00:00:00:02</span></div>
+          <div class="canvas-wrap"><canvas id="dmCanvas" width="520" height="650"></canvas></div>
+          <div class="frame-foot"><span>detections <b id="dmCount">–</b></span><span id="dmMs">idle</span></div>
+        </figure>
+        <div class="demo-side">
+          <p class="lead">The boxes on my portrait are drawn by hand. These aren't. Detection runs in your browser, on your device. Switch on the camera and a tracker takes over: each object keeps an identity between frames, trails show where it has been, and boxes fade rather than vanish through brief occlusion. Nothing is uploaded.</p>
+          <div class="demo-ctl">
+            <button class="btn solid" id="dmRun" type="button">Run detection</button>
+            <button class="btn" id="dmCam" type="button">Live camera</button>
+            <button class="btn" id="dmPick" type="button">Your own image</button>
+          </div>
+          <input type="file" id="dmFile" accept="image/*" hidden>
+          <video id="dmVideo" playsinline muted aria-hidden="true"></video>
+          <div class="drop" id="dmDrop">or drop an image here</div>
+          <div class="status" id="dmStatus" role="status" aria-live="polite">Ready. COCO-SSD, 80 classes.</div>
+
+          <div class="telem" id="dmTelem">
+            <div class="telem-h">Inference telemetry</div>
+            <div class="telem-rows">
+              <div class="trow"><span>latency</span><b id="tLat">–</b></div>
+              <div class="trow"><span>fps</span><b id="tFps">–</b></div>
+              <div class="trow"><span>ids</span><b id="tTrk">–</b></div>
+              <div class="trow"><span>backend</span><b id="tBack">–</b></div>
+              <div class="trow"><span>model</span><b>SSD v2</b></div>
+              <div class="trow"><span>tracker</span><b>IoU assoc.</b></div>
+            </div>
+            <canvas id="tSpark" width="480" height="60" aria-hidden="true"></canvas>
+            <div class="telem-f">frame latency, last 60</div>
+          </div>
+
+          <ul class="det-list" id="dmOut"></ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1212,10 +1215,10 @@
 /* ---- navigation: filmstrip, track marker, palette, keyboard ---- */
 (function(){
   var FRAMES=[
-    {id:'demo',n:'01',t:'Live demo'},
-    {id:'about',n:'02',t:'About'},
-    {id:'venture',n:'03',t:'Venture'},
-    {id:'research',n:'04',t:'Research'},
+    {id:'about',n:'01',t:'About'},
+    {id:'venture',n:'02',t:'Venture'},
+    {id:'research',n:'03',t:'Research'},
+    {id:'demo',n:'04',t:'Live demo'},
     {id:'work',n:'05',t:'Selected work'},
     {id:'skills',n:'06',t:'Skills'},
     {id:'experience',n:'07',t:'Experience'},
