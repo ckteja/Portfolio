@@ -16,7 +16,10 @@
 <style>
   :root{
     --ground:#0C0D0F;--panel:#131519;--panel-2:#0F1114;--line:#22252B;--line-2:#2E323A;
-    --ink:#EDEBE6;--body:#B4B6BA;--muted:#83868D;--dim:#5C6067;--sig:#E2A33E;
+    --ink:#EDEBE6;--body:#B4B6BA;--muted:#9AA0A6;--dim:#7C8189;--sig:#E2A33E;
+    --e-out:cubic-bezier(.16,1,.3,1);
+    --e-io:cubic-bezier(.65,0,.35,1);
+    --t1:140ms; --t2:280ms;
     --maxw:900px;
     --f-display:"Newsreader",Georgia,serif;
     --f-body:"IBM Plex Sans",system-ui,sans-serif;
@@ -71,7 +74,7 @@
   .ab{fill:var(--panel);stroke:var(--line-2);stroke-width:1}
   .ab-hi{fill:none;stroke:var(--sig);stroke-width:1.4}
   .at{fill:#EDEBE6;font-family:"IBM Plex Sans",sans-serif;font-size:12.5px}
-  .at-s{fill:#83868D;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em}
+  .at-s{fill:#9AA0A6;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em}
   .at-a{fill:#E2A33E;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em}
   .aln{stroke:var(--line-2);stroke-width:1.2;fill:none}
   .aln-a{stroke:var(--sig);stroke-width:1.2;fill:none}
@@ -124,9 +127,21 @@
     h1{font-size:1.85rem}
     .meta{grid-template-columns:1fr}
   }
+  html.js .fade{opacity:0;transform:translateY(12px)}
+  html.js.ready .fade{opacity:1;transform:none;
+    transition:opacity 600ms var(--e-out) var(--d,0ms),transform 600ms var(--e-out) var(--d,0ms)}
+  .btn:active{transform:translateY(1px)}
+  ul.pts li{transition:transform var(--t2) var(--e-out)}
+  ul.pts li:hover{transform:translateX(3px)}
+  tr:hover td{background:rgba(226,163,62,.045)}
+  @media(prefers-reduced-motion:reduce){
+    html.js .fade{opacity:1!important;transform:none!important;transition:none!important}
+    ul.pts li:hover,.btn:active{transform:none}
+  }
   :focus-visible{outline:2px solid var(--sig);outline-offset:3px}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
+<script>document.documentElement.className+=' js';</script>
 </head>
 <body>
 
@@ -139,10 +154,10 @@
 
 <header>
   <div class="wrap">
-    <div class="eyebrow">Case study · Frame 04.3</div>
-    <h1>A detector that had to live on 4 GB and a fence post.</h1>
-    <p class="lede">Deploying a YOLOv5 wildlife detector to an Nvidia Jetson Nano: collecting the dataset that didn't exist, then making the model small enough to run where the animals actually are.</p>
-    <div class="meta">
+    <div class="eyebrow fade" style="--d:40ms">Case study · Frame 04.3</div>
+    <h1 class="fade" style="--d:110ms">A detector that had to live on 4 GB and a fence post.</h1>
+    <p class="lede fade" style="--d:190ms">Deploying a YOLOv5 wildlife detector to an Nvidia Jetson Nano: collecting the dataset that didn't exist, then making the model small enough to run where the animals actually are.</p>
+    <div class="meta fade" style="--d:260ms">
       <div><span class="k">Role</span><span class="v">End to end</span></div>
       <div><span class="k">Hardware</span><span class="v">Jetson Nano</span></div>
       <div><span class="k">Classes</span><span class="v">15+ custom</span></div>
@@ -293,5 +308,11 @@
   </span>
 </footer></div>
 
+<script>
+(function(){function s(){document.documentElement.classList.add('ready');}
+if(document.readyState==='complete')requestAnimationFrame(s);
+else window.addEventListener('load',function(){requestAnimationFrame(s);});
+setTimeout(s,1200);})();
+</script>
 </body>
 </html>

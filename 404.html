@@ -12,7 +12,7 @@
 <style>
   :root{
     --ground:#0C0D0F;--panel-2:#0F1114;--line:#22252B;--line-2:#2E323A;
-    --ink:#EDEBE6;--body:#B4B6BA;--muted:#83868D;--dim:#5C6067;--sig:#E2A33E;
+    --ink:#EDEBE6;--body:#B4B6BA;--muted:#9AA0A6;--dim:#7C8189;--sig:#E2A33E;
     color-scheme:dark;
   }
   *{box-sizing:border-box}
@@ -51,11 +51,18 @@
       <h1>Signal lost.</h1>
       <p>Nothing in this frame. The page you asked for isn't here. It may have been moved, or the link mistyped.</p>
       <div class="cta">
-        <a class="btn solid" href="/Portfolio/">Back to the sequence</a>
+        <a class="btn solid" id="home" href="/Portfolio/">Back to the sequence</a>
         <a class="btn" href="mailto:chandrakiranteja@gmail.com">Email me</a>
       </div>
     </div>
     <div class="foot"><span>detections <b>0</b></span><span>track id <b>–</b></span></div>
   </main>
+<script>
+(function(){
+  var a=document.getElementById('home'); if(!a) return;
+  var p=location.pathname.split('/').filter(Boolean);
+  a.href = p.length>1 ? '/'+p[0]+'/' : '/';
+})();
+</script>
 </body>
 </html>
