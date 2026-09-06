@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chandra Kiran Teja · AI Engineer</title>
-<meta name="description" content="Chandra Kiran Teja, AI engineer working on computer vision, deep learning and real-time video understanding. Three IEEE publications. M.Sc. Artificial Intelligence Engineering, Universität Passau.">
+<title>Chandra Kiran Teja · AI / ML Engineer</title>
+<meta name="description" content="Chandra Kiran Teja, AI / ML engineer taking models from research to deployment: computer vision, real-time tracking and edge hardware. Three IEEE publications. M.Sc. Artificial Intelligence Engineering, Universität Passau.">
 <link rel="canonical" href="https://ckteja.github.io/Portfolio/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230C0D0F'/%3E%3Crect x='22' y='22' width='56' height='56' fill='none' stroke='%23E2A33E' stroke-width='7'/%3E%3C/svg%3E">
 <meta property="og:type" content="profile">
 <meta property="og:url" content="https://ckteja.github.io/Portfolio/">
-<meta property="og:title" content="Chandra Kiran Teja · AI Engineer">
-<meta property="og:description" content="Computer vision and deep learning engineer. Three IEEE publications in human action recognition and real-time tracking. M.Sc. AI Engineering, Universität Passau.">
+<meta property="og:title" content="Chandra Kiran Teja · AI / ML Engineer">
+<meta property="og:description" content="AI / ML engineer taking models from research to deployment: computer vision, edge hardware, real-time tracking. Three IEEE publications. M.Sc. AI Engineering, Universität Passau.">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/91280385?v=4">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chandra Kiran Teja · AI Engineer">
-<meta name="twitter:description" content="Computer vision and deep learning engineer. Three IEEE publications. M.Sc. AI Engineering, Universität Passau.">
+<meta name="twitter:title" content="Chandra Kiran Teja · AI / ML Engineer">
+<meta name="twitter:description" content="AI / ML engineer taking models from research to deployment. Three IEEE publications. M.Sc. AI Engineering, Universität Passau.">
 <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/91280385?v=4">
 <script type="application/ld+json">
 {
@@ -23,7 +23,7 @@
   "name":"Chandra Kiran Teja",
   "url":"https://ckteja.github.io/Portfolio/",
   "email":"mailto:chandrakiranteja@gmail.com",
-  "jobTitle":"AI Engineer",
+  "jobTitle":"AI / ML Engineer",
   "description":"AI engineer working on computer vision, deep learning and real-time video understanding.",
   "address":{"@type":"PostalAddress","addressLocality":"Passau","addressCountry":"DE"},
   "sameAs":["https://github.com/ckteja","https://www.linkedin.com/in/chandrakiranteja/"],
@@ -97,13 +97,32 @@
 
   /* masthead */
   .masthead{padding:72px 0 60px;border-bottom:1px solid var(--line)}
-  .mast{display:grid;grid-template-columns:1.05fr .95fr;gap:4rem;align-items:center}
+  .mast{display:grid;grid-template-columns:1.22fr .78fr;gap:3.4rem;align-items:center}
+  .masthead .frame{max-width:375px;margin-left:auto}
   .eyebrow{font-family:var(--f-mono);font-size:.73rem;letter-spacing:.13em;text-transform:uppercase;color:var(--sig);margin-bottom:1.4rem;display:flex;align-items:center;gap:.7rem}
   .eyebrow::after{content:"";height:1px;flex:1;background:var(--line-2);max-width:90px}
-  h1{font-family:var(--f-display);font-weight:500;font-size:clamp(2.6rem,5.6vw,4.05rem);line-height:1.06;letter-spacing:-.022em;color:var(--ink);margin:0 0 1.3rem;text-wrap:balance}
-  .standfirst{font-size:1.13rem;line-height:1.62;max-width:52ch;margin:0 0 1.3rem}
+  h1{font-family:var(--f-display);font-weight:500;font-size:clamp(2.75rem,6vw,4.5rem);line-height:1.01;letter-spacing:-.028em;color:var(--ink);margin:0 0 1.4rem;text-wrap:balance}
+  .standfirst{font-size:1.15rem;line-height:1.6;max-width:50ch;margin:0 0 1.7rem}
   .standfirst strong{color:var(--ink);font-weight:600}
-  .mast-note{font-size:.99rem;color:var(--muted);max-width:52ch;margin:0 0 2rem}
+  .mast-note{font-size:.95rem;color:var(--muted);max-width:52ch;margin:0 0 1.9rem}
+  .proof{display:grid;grid-template-columns:repeat(3,1fr);list-style:none;margin:0 0 1.5rem;padding:0}
+  .proof li{display:flex;flex-direction:column;gap:.3rem;padding:0 1.25rem;border-left:1px solid var(--line-2)}
+  .proof li:first-child{padding-left:0;border-left:0}
+  .proof span{align-self:flex-start}
+  .proof b{font-family:var(--f-display);font-weight:600;font-size:1.62rem;color:var(--ink);
+           line-height:1;font-variant-numeric:tabular-nums}
+  .proof b i{font-style:normal;color:var(--sig)}
+  .proof span{font-family:var(--f-mono);font-size:.67rem;letter-spacing:.07em;
+              text-transform:uppercase;color:var(--muted)}
+  @media(max-width:560px){
+    .proof{gap:.9rem;padding-top:1.15rem;border-top:1px solid var(--line-2);margin-bottom:1.4rem}
+    .proof li{padding:0;border-left:0}
+    .proof b{font-size:1.3rem}
+    .proof span{font-size:.6rem;line-height:1.35;letter-spacing:.05em}
+    .masthead .cta{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+    .masthead .cta .btn{text-align:center}
+    .masthead .cta .btn:first-child{grid-column:1/-1}
+  }
   .cta{display:flex;flex-wrap:wrap;gap:.65rem}
   .btn{font-family:var(--f-mono);font-size:.79rem;padding:.7rem 1.12rem;border-radius:2px;border:1px solid var(--line-2);color:var(--ink);background:transparent;transition:border-color .18s,color .18s}
   .btn:hover{border-color:var(--sig);color:var(--sig)}
@@ -148,7 +167,7 @@
 
   /* frame-numbered sections */
   section{border-bottom:1px solid var(--line)}
-  .sec{display:grid;grid-template-columns:190px 1fr;gap:3.2rem;padding:72px 0}
+  .sec{display:grid;grid-template-columns:190px 1fr;gap:3.2rem;padding:var(--pad,72px) 0}
   .marker{position:sticky;top:104px}
   .marker .fnum{font-family:var(--f-mono);font-size:.7rem;color:var(--sig);letter-spacing:.1em;display:block}
   .marker .fname{font-family:var(--f-mono);font-size:.73rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);display:block;margin-top:.45rem}
@@ -216,29 +235,31 @@
   .foot a:hover{color:var(--sig);border-color:var(--sig)}
 
   /* live demo */
-  .demo-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:2rem;align-items:start}
+  .demo-grid{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:2rem;align-items:start}
   @media(max-width:880px){.demo-grid{grid-template-columns:1fr;gap:1.4rem}}
   .canvas-wrap{position:relative;line-height:0;background:var(--panel-2);min-height:120px}
-  .canvas-wrap canvas{width:100%;height:auto;max-height:520px;object-fit:contain;display:block}
-  .demo-side .lead{font-size:.97rem;margin:0 0 1.1rem;color:var(--body)}
-  .demo-ctl{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.1rem}
+  .canvas-wrap{height:300px;display:grid;place-items:center;overflow:hidden}
+  .canvas-wrap canvas{max-width:100%;max-height:300px;width:auto;height:auto;object-fit:contain;display:block}
+  .demo-side .lead{font-size:.95rem;line-height:1.6;margin:0 0 .9rem;color:var(--body)}
+  .demo-ctl{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.85rem}
   .demo-ctl .btn{cursor:pointer;font-size:.76rem;padding:.6rem .95rem}
   .demo-ctl .btn[disabled]{opacity:.45;cursor:not-allowed}
-  .status{font-family:var(--f-mono);font-size:.73rem;color:var(--muted);border-left:2px solid var(--line-2);padding-left:.8rem;margin-bottom:1rem;min-height:1.2rem}
+  .status{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);border-left:2px solid var(--line-2);padding-left:.8rem;margin:.7rem 0 .9rem;min-height:1.1rem}
   .status.busy{color:var(--sig);border-color:var(--sig)}
   .status.err{color:#D98A6A;border-color:#D98A6A}
-  .det-list{list-style:none;margin:0;padding:0;font-family:var(--f-mono);font-size:.75rem;display:flex;flex-direction:column;gap:.35rem;max-height:230px;overflow-y:auto}
-  .det-list li{display:flex;justify-content:space-between;gap:1rem;padding:.4rem .6rem;background:var(--panel);border-left:2px solid var(--sig)}
+  .det-list{list-style:none;margin:0;padding:0;font-family:var(--f-mono);font-size:.73rem;display:flex;flex-direction:column;gap:.3rem;max-height:150px;overflow-y:auto}
+  .det-list li{display:flex;justify-content:space-between;gap:1rem;padding:.32rem .55rem;background:var(--panel);border-left:2px solid var(--sig)}
   .det-list .cls{color:var(--ink)}
   .det-list .cf{color:var(--sig);font-variant-numeric:tabular-nums}
-  .drop{border:1px dashed var(--line-2);padding:.7rem .9rem;font-family:var(--f-mono);font-size:.71rem;color:var(--dim);text-align:center}
+  .drop{border:1px dashed var(--line-2);padding:.55rem .9rem;font-family:var(--f-mono);font-size:.71rem;color:var(--dim);text-align:center}
   .drop.over{border-color:var(--sig);color:var(--sig)}
   #dmVideo{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px}
-  .telem{border:1px solid var(--line);background:var(--panel-2);padding:.9rem 1rem;margin-bottom:1rem}
-  .telem-h{font-family:var(--f-mono);font-size:.67rem;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin-bottom:.7rem}
-  .trow{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:.74rem;padding:.22rem 0;color:var(--muted)}
+  .telem{border:1px solid var(--line);background:var(--panel-2);padding:.75rem .9rem;margin-bottom:.9rem}
+  .telem-h{font-family:var(--f-mono);font-size:.67rem;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin-bottom:.6rem}
+  .telem-rows{display:grid;grid-template-columns:1fr 1fr;gap:0 1.2rem}
+  .trow{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:.72rem;padding:.16rem 0;color:var(--muted)}
   .trow b{color:var(--ink);font-weight:400;font-variant-numeric:tabular-nums}
-  #tSpark{width:100%;height:30px;display:block;margin-top:.7rem}
+  #tSpark{width:100%;height:26px;display:block;margin-top:.55rem}
   .telem-f{font-family:var(--f-mono);font-size:.63rem;color:var(--dim);letter-spacing:.06em;margin-top:.3rem}
 
   /* filmstrip scrubber */
@@ -382,7 +403,9 @@
     .sec{padding:46px 0}
     .masthead{padding:44px 0 40px}
     .frame{max-width:100%}
-    .canvas-wrap canvas{max-height:420px}
+    .canvas-wrap{height:250px}
+    .canvas-wrap canvas{max-height:250px}
+    .det-list{max-height:132px}
     .btn,.demo-ctl .btn{padding:.82rem 1.05rem}
     .nav-in{height:60px}
     .mark{font-size:.95rem}
@@ -398,8 +421,9 @@
   @media(max-width:430px){
     .wrap{padding:0 16px}
     h1{font-size:2.1rem}
-    .demo-ctl{flex-direction:column;align-items:stretch}
-    .demo-ctl .btn{text-align:center}
+    .demo-ctl{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+    .demo-ctl .btn{text-align:center;padding:.72rem .5rem;font-size:.72rem}
+    .demo-ctl .btn:first-child{grid-column:1/-1}
     .ptop{gap:.3rem}
     .kind{white-space:normal}
   }
@@ -460,14 +484,19 @@
 <header class="masthead" id="top">
   <div class="wrap mast">
     <div>
-      <div class="eyebrow lift" style="--d:40ms">AI Engineer · Computer Vision</div>
-      <h1 class="lift" style="--d:110ms">Deep learning systems that understand what happens in video.</h1>
-      <p class="standfirst lift" style="--d:200ms">I build and deploy computer vision models for <strong>action recognition, detection and multi-object tracking</strong>, including on resource-constrained edge hardware where accuracy has to survive a memory budget.</p>
-      <p class="mast-note lift" style="--d:270ms">Completing an M.Sc. in Artificial Intelligence Engineering at Universität Passau, with three peer-reviewed IEEE publications and industry experience as a deep learning engineer. Currently building i-Brick, a building-moisture sensing venture now entering pilot.</p>
-      <div class="cta lift" style="--d:340ms">
+      <div class="eyebrow lift" style="--d:40ms">AI / ML Engineer · Research to deployment</div>
+      <h1 class="lift" style="--d:110ms">Published research.<br>Deployed models.</h1>
+      <p class="standfirst lift" style="--d:200ms">I build and deploy computer vision systems for <strong>action recognition, object detection, and multi-object tracking</strong>, with a focus on resource-constrained edge hardware.</p>
+      <ul class="proof lift" style="--d:255ms">
+        <li><b>3<i>×</i></b><span>IEEE publications</span></li>
+        <li><b>90<i>%</i></b><span>detection accuracy, Jetson Nano</span></li>
+        <li><b>M.Sc.</b><span>AI · Universität Passau</span></li>
+      </ul>
+      <p class="mast-note lift" style="--d:300ms">Currently building <strong style="color:var(--ink);font-weight:600">i-Brick</strong>, a building-moisture sensing venture entering pilot. Seeking working-student and Master's thesis opportunities in applied ML and computer vision.</p>
+      <div class="cta lift" style="--d:360ms">
         <a class="btn solid" href="#work">Selected work</a>
         <a class="btn" href="ChandraKiranTeja_Resume.pdf" target="_blank" rel="noopener">Download CV</a>
-        <a class="btn" href="mailto:chandrakiranteja@gmail.com">Email me</a>
+        <a class="btn" href="mailto:chandrakiranteja@gmail.com">Contact me</a>
       </div>
     </div>
 
@@ -482,7 +511,7 @@
           <g class="tag t2"><rect x="177" y="136" width="114" height="22" rx="2"></rect><text x="184" y="152">face · 0.97</text></g>
         </svg>
       </div>
-      <div class="frame-foot"><span>detections <b>2</b></span><span>track id <b>01</b></span></div>
+      <div class="frame-foot"><span>520 × 650</span><span>detections <b>2</b> · track <b>01</b></span></div>
     </figure>
   </div>
 </header>
@@ -490,13 +519,13 @@
 <div class="facts">
   <div class="wrap facts-grid">
     <div class="fact"><span class="k">Based in</span><span class="v">Passau, Germany</span></div>
-    <div class="fact"><span class="k">Seeking</span><span class="v">AI / ML engineering roles</span></div>
+    <div class="fact"><span class="k">Seeking</span><span class="v">Working student · Master's thesis</span></div>
     <div class="fact"><span class="k">Languages</span><span class="v">English · German (improving)</span></div>
     <div class="fact"><span class="k">Building</span><span class="v">i-Brick · pilot Q4 2026</span></div>
   </div>
 </div>
 
-<section id="demo">
+<section id="demo" style="--pad:56px">
   <div class="wrap sec">
     <div class="marker"><span class="fnum">FRAME 01</span><span class="fname">Live demo</span><div class="tick"></div></div>
     <div class="reveal">
@@ -508,7 +537,7 @@
           <div class="frame-foot"><span>detections <b id="dmCount">–</b></span><span id="dmMs">idle</span></div>
         </figure>
         <div class="demo-side">
-          <p class="lead">The boxes on my portrait above are drawn by hand. These ones aren't. Detection runs in your browser, on your device. Switch on the camera and a tracker takes over: every object gets an identity it keeps between frames, with a trail showing where it has been. Boxes fade rather than vanish when something is briefly occluded. Nothing is uploaded, and the camera feed never leaves your machine.</p>
+          <p class="lead">The boxes on my portrait are drawn by hand. These aren't. Detection runs in your browser, on your device. Switch on the camera and a tracker takes over: each object keeps an identity between frames, trails show where it has been, and boxes fade rather than vanish through brief occlusion. Nothing is uploaded.</p>
           <div class="demo-ctl">
             <button class="btn solid" id="dmRun" type="button">Run detection</button>
             <button class="btn" id="dmCam" type="button">Live camera</button>
@@ -521,12 +550,14 @@
 
           <div class="telem" id="dmTelem">
             <div class="telem-h">Inference telemetry</div>
-            <div class="trow"><span>latency</span><b id="tLat">–</b></div>
-            <div class="trow"><span>throughput</span><b id="tFps">–</b></div>
-            <div class="trow"><span>active / total ids</span><b id="tTrk">–</b></div>
-            <div class="trow"><span>backend</span><b id="tBack">–</b></div>
-            <div class="trow"><span>model</span><b>SSD MobileNet v2</b></div>
-            <div class="trow"><span>tracker</span><b>IoU association</b></div>
+            <div class="telem-rows">
+              <div class="trow"><span>latency</span><b id="tLat">–</b></div>
+              <div class="trow"><span>fps</span><b id="tFps">–</b></div>
+              <div class="trow"><span>ids</span><b id="tTrk">–</b></div>
+              <div class="trow"><span>backend</span><b id="tBack">–</b></div>
+              <div class="trow"><span>model</span><b>SSD v2</b></div>
+              <div class="trow"><span>tracker</span><b>IoU assoc.</b></div>
+            </div>
             <canvas id="tSpark" width="480" height="60" aria-hidden="true"></canvas>
             <div class="telem-f">frame latency, last 60</div>
           </div>
@@ -546,7 +577,7 @@
       <p>My work sits where a model stops being a notebook result and starts being a system. That means the unglamorous parts: evaluating honestly, cutting a model down to fit the hardware it will actually run on, and instrumenting it so you know when it degrades.</p>
       <p>Most of it has been video: recognising human actions across frames, holding identities through occlusion, and running detection on a <strong>Jetson Nano</strong> rather than a datacentre GPU. Three of those projects became <strong>IEEE ICAECT papers</strong>, which forced a level of rigour in evaluation I've kept since.</p>
       <p>At Passau I've been extending that into foundation models and end-to-end systems, putting <strong>SAM, YOLO and ViT</strong> in a single pipeline with zero-shot and few-shot learning and live monitoring over the inference stack.</p>
-      <p>Alongside that I'm building <strong>i-Brick</strong> with a small team: sensors inside building walls that catch moisture damage months before it is visible. Different domain, same problem shape as the Jetson work. Constrained hardware, unreliable networks, and a model whose output somebody has to trust enough to spend money on.</p>
+      <p>Alongside that I'm building <strong>i-Brick</strong> with a small team. Different domain, same problem shape as the Jetson work: constrained hardware, unreliable networks, and a model whose output somebody has to trust enough to spend money on.</p>
     </div>
   </div>
 </section>
@@ -623,6 +654,7 @@
     <div class="marker"><span class="fnum">FRAME 04</span><span class="fname">Research</span><div class="tick"></div></div>
     <div class="reveal">
       <h2>Peer-reviewed publications</h2>
+      <p style="margin:0 0 1.6rem;max-width:62ch;color:var(--muted)">Three consecutive years at IEEE ICAECT, including presenting the work at the conference.</p>
       <ol class="refs">
         <li>
           <p class="rt">DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos</p>
@@ -765,22 +797,6 @@
         <a class="repo" href="edge-detection.html">↗ Read the full case study</a>
       </div>
 
-      <div class="proj">
-        <div class="ptop"><h3>Real-time human tracking with YOLO-NAS and DeepSORT</h3><span class="kind">Published</span></div>
-        <p>A multi-object tracking pipeline fusing YOLO-NAS detection with DeepSORT re-identification, holding consistent identities across frames under occlusion and crowding in real-time conditions.</p>
-        <p class="stack"><b>Stack</b> &nbsp;YOLO-NAS · DeepSORT · re-identification · real-time inference</p>
-      </div>
-
-      <div class="proj">
-        <div class="ptop"><h3>Action recognition with LRCN and attention</h3><span class="kind">Published</span></div>
-        <p>An LRCN architecture with attention mechanisms for classifying human actions in surveillance footage, evaluated on the Kinetics dataset.</p>
-        <div class="metrics">
-          <div class="metric"><div class="v">~87%</div><div class="k">Kinetics accuracy</div></div>
-          <div class="metric"><div class="v">2024</div><div class="k">IEEE ICAECT</div></div>
-        </div>
-        <p class="stack"><b>Stack</b> &nbsp;TensorFlow · LRCN · attention · Kinetics</p>
-      </div>
-
       <div class="tbl-wrap">
         <table class="res">
           <caption class="sr-only">Reported results across projects</caption>
@@ -790,7 +806,7 @@
             <tr><td class="n">LRCN + attention</td><td>Action recognition</td><td>Kinetics</td><td>GPU</td><td class="m">~87% accuracy</td></tr>
             <tr><td class="n">YOLO-NAS + DeepSORT</td><td>Detection &amp; tracking</td><td>Real-time video</td><td>GPU</td><td class="m">real-time ID retention</td></tr>
             <tr><td class="n">YOLOv5</td><td>Wildlife detection</td><td>Custom, 15+ classes</td><td>Jetson Nano</td><td class="m">90% accuracy</td></tr>
-            <tr><td class="n">YOLOv5</td><td>Object detection</td><td>Industry datasets</td><td>GPU</td><td class="m">&gt;90% accuracy</td></tr>
+            <tr><td class="n">YOLOv5</td><td>Object detection</td><td>Client data, internship</td><td>GPU</td><td class="m">&gt;90% accuracy</td></tr>
           </tbody>
         </table>
       </div>
@@ -805,11 +821,11 @@
     <div class="reveal">
       <h2>Tools and methods</h2>
       <div class="skills">
-        <div class="skill"><h3>Languages</h3><p>Python, C, C++, SQL, MATLAB</p></div>
+        <div class="skill"><h3>Languages</h3><p>Python, C, C++, SQL</p></div>
         <div class="skill"><h3>Machine learning</h3><p>PyTorch, TensorFlow, scikit-learn, NumPy, Pandas</p></div>
         <div class="skill"><h3>Computer vision</h3><p>OpenCV, YOLO / YOLO-NAS, DeepSORT, SAM, ViT, DenseNet, LRCN</p></div>
         <div class="skill"><h3>Deployment &amp; monitoring</h3><p>Nvidia Jetson Nano, embedded sensor nodes, model optimisation, Prometheus, Grafana</p></div>
-        <div class="skill"><h3>Specialisations</h3><p>Deep learning, NLP, generative AI, responsible ML, data analytics</p></div>
+        <div class="skill"><h3>Research areas</h3><p>Human action recognition, multi-object tracking, edge deployment, zero-shot and few-shot learning</p></div>
         <div class="skill"><h3>Tools</h3><p>Git, Linux, Jupyter, Google Colab</p></div>
       </div>
     </div>
@@ -821,6 +837,19 @@
     <div class="marker"><span class="fnum">FRAME 07</span><span class="fname">Experience</span><div class="tick"></div></div>
     <div class="reveal">
       <h2>Education &amp; industry</h2>
+
+      <div class="role">
+        <div class="when">Current</div>
+        <div>
+          <h3>Co-building i-Brick</h3>
+          <p class="org">i-Brick · building-envelope moisture sensing</p>
+          <ul>
+            <li>Sensor nodes inside wall build-ups, autonomous through network outages</li>
+            <li>Risk engine producing a single 0–100 score with plain-language reasoning</li>
+            <li>Pilot programme opening Q4 2026 across four sites</li>
+          </ul>
+        </div>
+      </div>
 
       <div class="role">
         <div class="when">Oct 2024 –<br>Present</div>
