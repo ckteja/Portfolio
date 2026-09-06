@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chandra Kiran Teja — AI Engineer</title>
-<meta name="description" content="Chandra Kiran Teja — AI engineer working on computer vision, deep learning and real-time video understanding. Three IEEE publications. M.Sc. Artificial Intelligence Engineering, Universität Passau.">
+<title>Chandra Kiran Teja · AI Engineer</title>
+<meta name="description" content="Chandra Kiran Teja, AI engineer working on computer vision, deep learning and real-time video understanding. Three IEEE publications. M.Sc. Artificial Intelligence Engineering, Universität Passau.">
 <link rel="canonical" href="https://ckteja.github.io/Portfolio/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230C0D0F'/%3E%3Crect x='22' y='22' width='56' height='56' fill='none' stroke='%23E2A33E' stroke-width='7'/%3E%3C/svg%3E">
 <meta property="og:type" content="profile">
 <meta property="og:url" content="https://ckteja.github.io/Portfolio/">
-<meta property="og:title" content="Chandra Kiran Teja — AI Engineer">
+<meta property="og:title" content="Chandra Kiran Teja · AI Engineer">
 <meta property="og:description" content="Computer vision and deep learning engineer. Three IEEE publications in human action recognition and real-time tracking. M.Sc. AI Engineering, Universität Passau.">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/91280385?v=4">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chandra Kiran Teja — AI Engineer">
+<meta name="twitter:title" content="Chandra Kiran Teja · AI Engineer">
 <meta name="twitter:description" content="Computer vision and deep learning engineer. Three IEEE publications. M.Sc. AI Engineering, Universität Passau.">
 <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/91280385?v=4">
 <script type="application/ld+json">
@@ -199,7 +199,7 @@
   .role .org{font-size:.91rem;color:var(--sig);margin:0 0 .7rem}
   .role ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.4rem}
   .role li{font-size:.96rem;padding-left:1.1rem;position:relative;max-width:62ch}
-  .role li::before{content:"—";position:absolute;left:0;color:var(--line-2)}
+  .role li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;background:var(--line-2)}
   @media(max-width:640px){.role{grid-template-columns:1fr;gap:.5rem}}
 
   .contact-grid{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1.6rem}
@@ -226,6 +226,64 @@
   .det-list .cf{color:var(--sig);font-variant-numeric:tabular-nums}
   .drop{border:1px dashed var(--line-2);padding:.7rem .9rem;font-family:var(--f-mono);font-size:.71rem;color:var(--dim);text-align:center}
   .drop.over{border-color:var(--sig);color:var(--sig)}
+  .telem{border:1px solid var(--line);background:var(--panel-2);padding:.9rem 1rem;margin-bottom:1rem}
+  .telem-h{font-family:var(--f-mono);font-size:.67rem;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin-bottom:.7rem}
+  .trow{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:.74rem;padding:.22rem 0;color:var(--muted)}
+  .trow b{color:var(--ink);font-weight:400;font-variant-numeric:tabular-nums}
+  #tSpark{width:100%;height:30px;display:block;margin-top:.7rem}
+  .telem-f{font-family:var(--f-mono);font-size:.63rem;color:var(--dim);letter-spacing:.06em;margin-top:.3rem}
+
+  /* filmstrip scrubber */
+  .strip{position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(12,13,15,.94);
+         backdrop-filter:blur(10px);border-top:1px solid var(--line);transform:translateY(101%);
+         transition:transform .3s ease}
+  .strip.on{transform:none}
+  .strip-in{max-width:var(--maxw);margin:0 auto;padding:.6rem 34px;display:flex;gap:.5rem;overflow-x:auto}
+  .cell{flex:0 0 auto;border:1px solid var(--line-2);background:var(--panel-2);padding:.42rem .7rem;
+        font-family:var(--f-mono);font-size:.68rem;color:var(--muted);cursor:pointer;white-space:nowrap;
+        transition:border-color .18s,color .18s}
+  .cell .n{color:var(--dim);margin-right:.45rem}
+  .cell:hover{border-color:var(--sig);color:var(--ink)}
+  .cell.on{border-color:var(--sig);color:var(--sig)}
+  .cell.on .n{color:var(--sig)}
+
+
+  /* track-id marker */
+  .track{position:fixed;left:16px;top:50%;transform:translateY(-50%);z-index:55;
+         font-family:var(--f-mono);font-size:.63rem;letter-spacing:.08em;color:var(--sig);
+         writing-mode:vertical-rl;opacity:0;transition:opacity .3s ease}
+  .track.on{opacity:1}
+  .track .box{writing-mode:horizontal-tb;width:12px;height:12px;border:1.5px solid var(--sig);margin:0 auto .6rem}
+  @media(max-width:1340px){.track{display:none}}
+
+  /* command palette */
+  .pal{position:fixed;inset:0;z-index:90;background:rgba(6,7,8,.72);display:none;padding-top:14vh}
+  .pal.on{display:block}
+  .pal-box{max-width:520px;margin:0 auto;background:var(--panel);border:1px solid var(--line-2)}
+  .pal input{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);
+             padding:1rem 1.1rem;color:var(--ink);font-family:var(--f-mono);font-size:.85rem;outline:none}
+  .pal ul{list-style:none;margin:0;padding:.4rem;max-height:320px;overflow-y:auto}
+  .pal li{padding:.6rem .8rem;font-family:var(--f-mono);font-size:.78rem;color:var(--muted);cursor:pointer;
+          display:flex;justify-content:space-between;gap:1rem}
+  .pal li .h{color:var(--dim);font-size:.68rem}
+  .pal li.sel,.pal li:hover{background:var(--panel-2);color:var(--sig)}
+  .pal-hint{padding:.55rem 1.1rem;border-top:1px solid var(--line);font-family:var(--f-mono);
+            font-size:.65rem;color:var(--dim);display:flex;gap:1.2rem}
+
+  /* cite + results table */
+  .cite{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);background:transparent;
+        border:1px solid var(--line-2);border-radius:2px;padding:.28rem .6rem;margin-left:.8rem;
+        cursor:pointer;transition:border-color .18s,color .18s}
+  .cite:hover{border-color:var(--sig);color:var(--sig)}
+  .cite.done{border-color:var(--sig);color:var(--sig)}
+  .tbl-wrap{overflow-x:auto;margin-top:1.4rem;border:1px solid var(--line)}
+  table.res{border-collapse:collapse;width:100%;min-width:600px;font-size:.88rem}
+  table.res th{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;
+               color:var(--dim);text-align:left;padding:.75rem .9rem;border-bottom:1px solid var(--line-2);font-weight:400}
+  table.res td{padding:.8rem .9rem;border-bottom:1px solid var(--line);color:var(--body);vertical-align:top}
+  table.res tr:last-child td{border-bottom:0}
+  table.res td.m{font-family:var(--f-mono);color:var(--sig);font-variant-numeric:tabular-nums;white-space:nowrap}
+  table.res td.n{color:var(--ink)}
 
   /* architecture diagrams */
   figure.arch{margin:1.4rem 0 0;border:1px solid var(--line);background:var(--panel-2);padding:1.1rem 1.2rem;overflow-x:auto}
@@ -247,7 +305,50 @@
     .tag{opacity:1;animation:none}
     html{scroll-behavior:auto}
   }
+  /* --- mobile hardening --- */
+  .sec>*,.mast>*,.demo-grid>*,.role>*,.facts-grid>*,.skills>*{min-width:0}
+  .proj,.prose,.demo-side{min-width:0}
+  figure.arch,.tbl-wrap,.canvas-wrap{max-width:100%}
+  img,canvas,svg{max-width:100%}
+
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   :focus-visible{outline:2px solid var(--sig);outline-offset:3px}
+
+  section{scroll-margin-top:76px}
+  @media(max-width:700px){
+    figure.arch::before,.tbl-wrap::before{
+      content:"↔ swipe";display:block;position:sticky;left:0;
+      font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--dim);margin-bottom:.55rem}
+    .tbl-wrap::before{padding:.6rem .9rem 0}
+    .wrap{padding:0 20px}
+    .strip-in{padding:.5rem 16px;gap:.4rem}
+    .cell{font-size:.66rem;padding:.42rem .62rem}
+    body{padding-bottom:54px}
+    .sec{padding:46px 0}
+    .masthead{padding:44px 0 40px}
+    .frame{max-width:100%}
+    .canvas-wrap canvas{max-height:420px}
+    .btn,.demo-ctl .btn{padding:.82rem 1.05rem}
+    .nav-in{height:60px}
+    .mark{font-size:.95rem}
+    .nav-cv{font-size:.7rem;padding:.5rem .72rem}
+    figure.arch svg{min-width:540px}
+    table.res{min-width:520px}
+    .facts{padding:20px 0}
+    .metrics{gap:1.5rem}
+    ol.refs li{padding-left:0}
+    ol.refs li::before{position:static;display:block;margin-bottom:.4rem}
+    .cite{margin-left:0;margin-top:.6rem;display:inline-block}
+  }
+  @media(max-width:430px){
+    .wrap{padding:0 16px}
+    h1{font-size:2.1rem}
+    .demo-ctl{flex-direction:column;align-items:stretch}
+    .demo-ctl .btn{text-align:center}
+    .ptop{gap:.3rem}
+    .kind{white-space:normal}
+  }
 
   @media print{
     .scrub,nav,.cta,.contact-grid,#demo,.frame-bar,.frame-foot,.stage svg{display:none!important}
@@ -272,6 +373,18 @@
 
 <div class="scrub"><i id="ph"></i></div>
 
+<div class="track" id="track" aria-hidden="true"><div class="box"></div><span id="trackLbl">TRACK 01 · DEMO</span></div>
+
+<div class="pal" id="pal" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="pal-box">
+    <input id="palIn" type="text" placeholder="Jump to a frame, or type a command…" autocomplete="off" spellcheck="false">
+    <ul id="palList"></ul>
+    <div class="pal-hint"><span>↑↓ navigate</span><span>⏎ select</span><span>esc close</span></div>
+  </div>
+</div>
+
+<div class="strip" id="strip"><div class="strip-in" id="stripIn"></div></div>
+
 <nav>
   <div class="wrap nav-in">
     <a class="mark" href="#top">Chandra Kiran Teja</a>
@@ -292,7 +405,7 @@
     <div>
       <div class="eyebrow">AI Engineer · Computer Vision</div>
       <h1>Deep learning systems that understand what happens in video.</h1>
-      <p class="standfirst">I build and deploy computer vision models for <strong>action recognition, detection and multi-object tracking</strong> — including on resource-constrained edge hardware, where accuracy has to survive a memory budget.</p>
+      <p class="standfirst">I build and deploy computer vision models for <strong>action recognition, detection and multi-object tracking</strong>, including on resource-constrained edge hardware where accuracy has to survive a memory budget.</p>
       <p class="mast-note">Completing an M.Sc. in Artificial Intelligence Engineering at Universität Passau, with three peer-reviewed IEEE publications and industry experience as a deep learning engineer.</p>
       <div class="cta">
         <a class="btn solid" href="#work">Selected work</a>
@@ -335,17 +448,30 @@
         <figure class="frame" style="margin:0">
           <div class="frame-bar"><span id="dmName">portrait.jpg</span><span class="rec" id="dmTime">00:00:00:02</span></div>
           <div class="canvas-wrap"><canvas id="dmCanvas" width="520" height="650"></canvas></div>
-          <div class="frame-foot"><span>detections <b id="dmCount">—</b></span><span id="dmMs">idle</span></div>
+          <div class="frame-foot"><span>detections <b id="dmCount">–</b></span><span id="dmMs">idle</span></div>
         </figure>
         <div class="demo-side">
-          <p class="lead">The boxes on my portrait above are drawn by hand. These ones aren't — this runs a real object detection model in your browser, on your device. Nothing is uploaded anywhere.</p>
+          <p class="lead">The boxes on my portrait above are drawn by hand. These ones aren't. This runs a real object detection model in your browser, on your device. Nothing is uploaded, and the camera feed never leaves your machine.</p>
           <div class="demo-ctl">
             <button class="btn solid" id="dmRun" type="button">Run detection</button>
-            <button class="btn" id="dmPick" type="button">Use your own image</button>
+            <button class="btn" id="dmCam" type="button">Live camera</button>
+            <button class="btn" id="dmPick" type="button">Your own image</button>
           </div>
           <input type="file" id="dmFile" accept="image/*" hidden>
+          <video id="dmVideo" playsinline muted hidden></video>
           <div class="drop" id="dmDrop">or drop an image here</div>
-          <div class="status" id="dmStatus" role="status" aria-live="polite">Ready — COCO-SSD, 80 classes.</div>
+          <div class="status" id="dmStatus" role="status" aria-live="polite">Ready. COCO-SSD, 80 classes.</div>
+
+          <div class="telem" id="dmTelem">
+            <div class="telem-h">Inference telemetry</div>
+            <div class="trow"><span>latency</span><b id="tLat">–</b></div>
+            <div class="trow"><span>throughput</span><b id="tFps">–</b></div>
+            <div class="trow"><span>backend</span><b id="tBack">–</b></div>
+            <div class="trow"><span>model</span><b>SSD MobileNet v2</b></div>
+            <canvas id="tSpark" width="480" height="60" aria-hidden="true"></canvas>
+            <div class="telem-f">frame latency, last 60</div>
+          </div>
+
           <ul class="det-list" id="dmOut"></ul>
         </div>
       </div>
@@ -359,8 +485,8 @@
     <div class="prose reveal">
       <h2>Research-driven, deployment-minded.</h2>
       <p>My work sits where a model stops being a notebook result and starts being a system. That means the unglamorous parts: evaluating honestly, cutting a model down to fit the hardware it will actually run on, and instrumenting it so you know when it degrades.</p>
-      <p>Most of it has been video — recognising human actions across frames, holding identities through occlusion, and running detection on a <strong>Jetson Nano</strong> rather than a datacentre GPU. Three of those projects became <strong>IEEE ICAECT papers</strong>, which forced a level of rigour in evaluation I've kept since.</p>
-      <p>At Passau I've been extending that into foundation models and end-to-end systems — <strong>SAM, YOLO and ViT</strong> in a single pipeline, with zero-shot and few-shot learning and live monitoring over the inference stack.</p>
+      <p>Most of it has been video: recognising human actions across frames, holding identities through occlusion, and running detection on a <strong>Jetson Nano</strong> rather than a datacentre GPU. Three of those projects became <strong>IEEE ICAECT papers</strong>, which forced a level of rigour in evaluation I've kept since.</p>
+      <p>At Passau I've been extending that into foundation models and end-to-end systems, putting <strong>SAM, YOLO and ViT</strong> in a single pipeline with zero-shot and few-shot learning and live monitoring over the inference stack.</p>
     </div>
   </div>
 </section>
@@ -375,19 +501,19 @@
           <p class="rt">DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos</p>
           <p class="rm">C. K. Teja. <em>IEEE International Conference on Advances in Electrical, Electronics, Communication, Computing and Automation (ICAECT)</em>, 2025.</p>
           <p class="rd">A hybrid architecture pairing DenseNet feature extraction with Transformer blocks for video-based action recognition, improving classification accuracy by 5–7% over the baseline.</p>
-          <a class="rl" href="https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=DenseNet%20Transformer%20Human%20Action%20Recognition%20Videos" target="_blank" rel="noopener">IEEE Xplore →</a>
+          <a class="rl" href="https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=DenseNet%20Transformer%20Human%20Action%20Recognition%20Videos" target="_blank" rel="noopener">IEEE Xplore →</a><button class="cite" type="button" data-bib="p2025">cite</button>
         </li>
         <li>
           <p class="rt">Action Recognition for Intelligent Surveillance Systems using LRCN with Attention Mechanisms</p>
           <p class="rm">C. K. Teja. <em>IEEE ICAECT</em>, 2024.</p>
           <p class="rd">An LRCN model augmented with attention for action classification in surveillance footage, reaching approximately 87% accuracy on the Kinetics dataset.</p>
-          <a class="rl" href="https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=Action%20Recognition%20Intelligent%20Surveillance%20LRCN%20Attention" target="_blank" rel="noopener">IEEE Xplore →</a>
+          <a class="rl" href="https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=Action%20Recognition%20Intelligent%20Surveillance%20LRCN%20Attention" target="_blank" rel="noopener">IEEE Xplore →</a><button class="cite" type="button" data-bib="p2024">cite</button>
         </li>
         <li>
           <p class="rt">Enhancing Real-Time Human Tracking using YOLO-NAS and DeepSORT Fusion Models</p>
           <p class="rm">C. K. Teja. <em>IEEE ICAECT</em>, 2023.</p>
           <p class="rd">A tracking pipeline fusing YOLO-NAS detection with DeepSORT re-identification to maintain identity across frames in real-time environments.</p>
-          <a class="rl" href="https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=Real-Time%20Human%20Tracking%20YOLO-NAS%20DeepSORT%20Fusion" target="_blank" rel="noopener">IEEE Xplore →</a>
+          <a class="rl" href="https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=Real-Time%20Human%20Tracking%20YOLO-NAS%20DeepSORT%20Fusion" target="_blank" rel="noopener">IEEE Xplore →</a><button class="cite" type="button" data-bib="p2023">cite</button>
         </li>
       </ol>
     </div>
@@ -402,7 +528,7 @@
 
       <div class="proj">
         <div class="ptop"><h3>Full-stack AI image analysis &amp; classification system</h3><span class="kind">M.Sc. · AI Engineering Lab</span></div>
-        <p>An end-to-end deployed system that segments, detects and classifies images using foundation models — SAM for segmentation, YOLO for detection, ViT for classification — combined through score fusion. Adds zero-shot and few-shot learning, tuned for low-memory environments, with Prometheus and Grafana monitoring across the inference stack.</p>
+        <p>An end-to-end deployed system that segments, detects and classifies images using foundation models: SAM for segmentation, YOLO for detection, ViT for classification, combined through score fusion. Adds zero-shot and few-shot learning, tuned for low-memory environments, with Prometheus and Grafana monitoring across the inference stack.</p>
         <p class="stack"><b>Stack</b> &nbsp;SAM · YOLO · ViT · zero-shot / few-shot · score fusion · Prometheus · Grafana</p>
         <figure class="arch">
           <svg viewBox="0 0 880 240" role="img" aria-label="Pipeline: an input image fans out to SAM segmentation and YOLO detection; the resulting regions feed a ViT classifier with zero-shot and few-shot heads, whose scores are fused into a final label. A monitoring sidecar observes the whole stack.">
@@ -439,7 +565,7 @@
             <rect class="ab" x="368" y="196" width="192" height="36" rx="2"></rect>
             <text class="at-s" x="386" y="218">PROMETHEUS · GRAFANA</text>
           </svg>
-          <figcaption>Inference pipeline — parallel segmentation and detection, fused classification, monitored end to end</figcaption>
+          <figcaption>Inference pipeline: parallel segmentation and detection, fused classification, monitored end to end</figcaption>
         </figure>
       </div>
 
@@ -494,8 +620,9 @@
             <text class="at-s" x="414" y="180">LONG-RANGE TEMPORAL DEPENDENCY THAT A PURE CONV STACK MISSES</text>
             <path class="aln-a" stroke-dasharray="3 4" d="M502 148 V170"></path>
           </svg>
-          <figcaption>DenseNet-Transformer — spatial features per frame, attention across the sequence</figcaption>
+          <figcaption>DenseNet-Transformer: spatial features per frame, attention across the sequence</figcaption>
         </figure>
+        <a class="repo" href="densenet-transformer.html">↗ Read the full case study</a>
       </div>
 
       <div class="proj">
@@ -508,6 +635,7 @@
         <p class="stack"><b>Stack</b> &nbsp;YOLOv5 · Jetson Nano · OpenCV · custom data collection</p>
         <a class="repo" href="https://github.com/ckteja/Animal-Intrusion-Detection" target="_blank" rel="noopener">↗ Detection repository</a>
         <a class="repo" href="https://github.com/ckteja/Jetson_AIDsys" target="_blank" rel="noopener">↗ Jetson deployment</a>
+        <a class="repo" href="edge-detection.html">↗ Read the full case study</a>
       </div>
 
       <div class="proj">
@@ -524,6 +652,20 @@
           <div class="metric"><div class="v">2024</div><div class="k">IEEE ICAECT</div></div>
         </div>
         <p class="stack"><b>Stack</b> &nbsp;TensorFlow · LRCN · attention · Kinetics</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="res">
+          <caption class="sr-only">Reported results across projects</caption>
+          <thead><tr><th>Model</th><th>Task</th><th>Data</th><th>Hardware</th><th>Reported</th></tr></thead>
+          <tbody>
+            <tr><td class="n">DenseNet-Transformer</td><td>Action recognition</td><td>Video, thesis set</td><td>GPU</td><td class="m">+5–7% vs baseline</td></tr>
+            <tr><td class="n">LRCN + attention</td><td>Action recognition</td><td>Kinetics</td><td>GPU</td><td class="m">~87% accuracy</td></tr>
+            <tr><td class="n">YOLO-NAS + DeepSORT</td><td>Detection &amp; tracking</td><td>Real-time video</td><td>GPU</td><td class="m">real-time ID retention</td></tr>
+            <tr><td class="n">YOLOv5</td><td>Wildlife detection</td><td>Custom, 15+ classes</td><td>Jetson Nano</td><td class="m">90% accuracy</td></tr>
+            <tr><td class="n">YOLOv5</td><td>Object detection</td><td>Industry datasets</td><td>GPU</td><td class="m">&gt;90% accuracy</td></tr>
+          </tbody>
+        </table>
       </div>
 
     </div>
@@ -554,7 +696,7 @@
       <h2>Education &amp; industry</h2>
 
       <div class="role">
-        <div class="when">Oct 2024 —<br>Present</div>
+        <div class="when">Oct 2024 –<br>Present</div>
         <div>
           <h3>M.Sc. Artificial Intelligence Engineering</h3>
           <p class="org">Universität Passau, Germany</p>
@@ -566,7 +708,7 @@
       </div>
 
       <div class="role">
-        <div class="when">Nov 2022 —<br>Feb 2023</div>
+        <div class="when">Nov 2022 –<br>Feb 2023</div>
         <div>
           <h3>Deep Learning Engineer, Intern</h3>
           <p class="org">Resolute AI Software Pvt. Ltd., Bangalore</p>
@@ -580,9 +722,9 @@
       </div>
 
       <div class="role">
-        <div class="when">Aug 2020 —<br>May 2024</div>
+        <div class="when">Aug 2020 –<br>May 2024</div>
         <div>
-          <h3>B.Tech, Artificial Intelligence — CGPA 9.4 / 10</h3>
+          <h3>B.Tech, Artificial Intelligence (CGPA 9.4 / 10)</h3>
           <p class="org">SRM University, India</p>
           <ul>
             <li>Thesis: action recognition for intelligent surveillance systems using Transformers</li>
@@ -592,13 +734,13 @@
       </div>
 
       <div class="role">
-        <div class="when">2023 — 2024</div>
+        <div class="when">2023 – 2024</div>
         <div>
           <h3>Certifications</h3>
           <p class="org">Virtual internships</p>
           <ul>
-            <li>AI-ML Virtual Internship — Google for Developers, India Edu Program (Jan–Mar 2024)</li>
-            <li>AI-ML Virtual Internship — AWS Academy (May–Jul 2023)</li>
+            <li>AI-ML Virtual Internship, Google for Developers · India Edu Program (Jan–Mar 2024)</li>
+            <li>AI-ML Virtual Internship, AWS Academy (May–Jul 2023)</li>
           </ul>
         </div>
       </div>
@@ -641,39 +783,52 @@
 (function(){
   var cv=document.getElementById('dmCanvas'); if(!cv) return;
   var ctx=cv.getContext('2d');
-  var elStatus=document.getElementById('dmStatus'), elOut=document.getElementById('dmOut'),
-      elRun=document.getElementById('dmRun'), elPick=document.getElementById('dmPick'),
-      elFile=document.getElementById('dmFile'), elDrop=document.getElementById('dmDrop'),
-      elName=document.getElementById('dmName'), elCount=document.getElementById('dmCount'),
-      elMs=document.getElementById('dmMs');
-  var img=null, model=null, busy=false;
+  var $=function(id){return document.getElementById(id);};
+  var elStatus=$('dmStatus'), elOut=$('dmOut'), elRun=$('dmRun'), elCam=$('dmCam'),
+      elPick=$('dmPick'), elFile=$('dmFile'), elDrop=$('dmDrop'), elName=$('dmName'),
+      elCount=$('dmCount'), elMs=$('dmMs'), elTime=$('dmTime'), vid=$('dmVideo'),
+      tLat=$('tLat'), tFps=$('tFps'), tBack=$('tBack'), spark=$('tSpark');
+  var sctx=spark.getContext('2d');
+  var img=null, model=null, busy=false, live=false, stream=null, hist=[], lastT=0, fps=0;
 
   function status(t,cls){ elStatus.textContent=t; elStatus.className='status'+(cls?' '+cls:''); }
+
+  function drawSpark(){
+    var w=spark.width,hh=spark.height;
+    sctx.clearRect(0,0,w,hh);
+    if(hist.length<2) return;
+    var mx=Math.max.apply(null,hist), mn=Math.min.apply(null,hist);
+    var rng=Math.max(1,mx-mn), step=w/Math.max(1,hist.length-1);
+    sctx.beginPath();
+    hist.forEach(function(v,i){
+      var x=i*step, y=hh-4-((v-mn)/rng)*(hh-10);
+      i?sctx.lineTo(x,y):sctx.moveTo(x,y);
+    });
+    sctx.strokeStyle='#E2A33E'; sctx.lineWidth=2; sctx.stroke();
+    sctx.lineTo(w,hh); sctx.lineTo(0,hh); sctx.closePath();
+    sctx.fillStyle='rgba(226,163,62,.13)'; sctx.fill();
+    var lx=(hist.length-1)*step, ly=hh-4-((hist[hist.length-1]-mn)/rng)*(hh-10);
+    sctx.beginPath(); sctx.arc(lx,ly,2.6,0,6.284); sctx.fillStyle='#E2A33E'; sctx.fill();
+  }
+  function telem(ms){
+    hist.push(ms); if(hist.length>60) hist.shift();
+    tLat.textContent=Math.round(ms)+' ms';
+    tFps.textContent = live ? (fps?fps.toFixed(1)+' fps':'–') : (1000/ms).toFixed(1)+' fps eq.';
+    try{ tBack.textContent = (window.tf && tf.getBackend) ? tf.getBackend() : '–'; }catch(e){ tBack.textContent='–'; }
+    drawSpark();
+  }
+  function fit(w,h){ cv.width=w; cv.height=h; }
   function drawBase(){
-    if(!img) return;
-    cv.width=img.naturalWidth||520; cv.height=img.naturalHeight||650;
-    ctx.clearRect(0,0,cv.width,cv.height);
-    ctx.drawImage(img,0,0,cv.width,cv.height);
+    if(live && vid.videoWidth){ fit(vid.videoWidth,vid.videoHeight); ctx.drawImage(vid,0,0,cv.width,cv.height); }
+    else if(img){ fit(img.naturalWidth||520,img.naturalHeight||650); ctx.drawImage(img,0,0,cv.width,cv.height); }
   }
-  function load(src,name){
-    var n=new Image();
-    n.onload=function(){
-      img=n; drawBase();
-      elName.textContent=name; elCount.textContent='—'; elMs.textContent='idle';
-      elOut.innerHTML=''; status('Ready — COCO-SSD, 80 classes.');
-    };
-    n.onerror=function(){ status('Could not read that image.','err'); };
-    n.src=src;
-  }
-  function drawDet(preds){
-    drawBase();
+  function boxes(preds){
     var s=Math.max(1,cv.width/520);
     ctx.lineWidth=2.2*s; ctx.strokeStyle='#E2A33E';
     ctx.font='500 '+(15*s)+'px "IBM Plex Mono", ui-monospace, monospace';
-    ctx.textBaseline='alphabetic';
     preds.forEach(function(p){
-      var x=p.bbox[0],y=p.bbox[1],w=p.bbox[2],h=p.bbox[3];
-      ctx.strokeRect(x,y,w,h);
+      var x=p.bbox[0],y=p.bbox[1],w=p.bbox[2],hh=p.bbox[3];
+      ctx.strokeRect(x,y,w,hh);
       var label=p.class+' · '+p.score.toFixed(2);
       var tw=ctx.measureText(label).width, th=23*s;
       var ty=(y-th<0)?y:y-th;
@@ -684,59 +839,248 @@
   function listDet(preds){
     elOut.innerHTML='';
     if(!preds.length){
-      var li=document.createElement('li');
-      var s1=document.createElement('span'); s1.className='cls'; s1.textContent='no objects above threshold';
-      li.appendChild(s1); elOut.appendChild(li); return;
+      var li=document.createElement('li'); var s0=document.createElement('span');
+      s0.className='cls'; s0.textContent='no objects above threshold'; li.appendChild(s0);
+      elOut.appendChild(li); return;
     }
-    preds.forEach(function(p){
+    preds.slice(0,12).forEach(function(p){
       var li=document.createElement('li');
       var a=document.createElement('span'); a.className='cls'; a.textContent=p.class;
       var b=document.createElement('span'); b.className='cf'; b.textContent=p.score.toFixed(2);
       li.appendChild(a); li.appendChild(b); elOut.appendChild(li);
     });
   }
-  function run(){
-    if(busy||!img) return;
-    busy=true; elRun.disabled=true;
-    var chain = model ? Promise.resolve(model) : (function(){
-      status('Loading model (~6 MB, first run only)…','busy');
-      if(typeof cocoSsd==='undefined') return Promise.reject(new Error('lib'));
-      return cocoSsd.load().then(function(m){ model=m; return m; });
-    })();
-    chain.then(function(m){
+  function getModel(){
+    if(model) return Promise.resolve(model);
+    status('Loading model (~6 MB, first run only)…','busy');
+    if(typeof cocoSsd==='undefined') return Promise.reject(new Error('lib'));
+    return cocoSsd.load().then(function(m){ model=m; return m; });
+  }
+  function fail(){
+    status('Couldn’t load the model. It downloads from a CDN, so a blocked network or sandboxed preview will stop it. Try again on the live site.','err');
+  }
+  function load(src,name){
+    stopCam();
+    var n=new Image();
+    n.onload=function(){
+      img=n; drawBase(); elName.textContent=name; elCount.textContent='–';
+      elMs.textContent='idle'; elOut.innerHTML=''; status('Ready. COCO-SSD, 80 classes.');
+    };
+    n.onerror=function(){ status('Could not read that image.','err'); };
+    n.src=src;
+  }
+  function runStill(){
+    if(busy||!img) return; busy=true; elRun.disabled=true;
+    getModel().then(function(m){
       status('Running inference…','busy');
       var t0=performance.now();
       return m.detect(img).then(function(preds){
-        var ms=Math.round(performance.now()-t0);
-        drawDet(preds); listDet(preds);
-        elCount.textContent=preds.length; elMs.textContent=ms+' ms';
-        status('Done — '+preds.length+' detection'+(preds.length===1?'':'s')+' in '+ms+' ms.');
+        var ms=performance.now()-t0;
+        drawBase(); boxes(preds); listDet(preds);
+        elCount.textContent=preds.length; elMs.textContent=Math.round(ms)+' ms';
+        telem(ms);
+        status('Done. '+preds.length+' detection'+(preds.length===1?'':'s')+' in '+Math.round(ms)+' ms.');
       });
-    }).catch(function(){
-      status('Couldn’t load the model — it downloads from a CDN, so a blocked network or sandboxed preview will stop it. Try again on the live site.','err');
-    }).then(function(){ busy=false; elRun.disabled=false; });
+    }).catch(fail).then(function(){ busy=false; elRun.disabled=false; });
   }
 
-  elRun.addEventListener('click',run);
+  /* ---- webcam ---- */
+  function loop(){
+    if(!live) return;
+    var t0=performance.now();
+    model.detect(vid).then(function(preds){
+      if(!live) return;
+      var ms=performance.now()-t0;
+      var now=performance.now();
+      if(lastT) fps=fps? fps*0.8 + (1000/(now-lastT))*0.2 : 1000/(now-lastT);
+      lastT=now;
+      drawBase(); boxes(preds); listDet(preds);
+      elCount.textContent=preds.length; elMs.textContent=Math.round(ms)+' ms';
+      elTime.textContent=(fps?fps.toFixed(1):'0.0')+' FPS';
+      telem(ms);
+      requestAnimationFrame(loop);
+    }).catch(function(){ stopCam(); fail(); });
+  }
+  function stopCam(){
+    live=false; fps=0; lastT=0;
+    if(stream){ stream.getTracks().forEach(function(t){t.stop();}); stream=null; }
+    elCam.textContent='Live camera';
+    elTime.textContent='00:00:00:02';
+  }
+  function startCam(){
+    if(live){ stopCam(); status('Camera stopped.'); drawBase(); return; }
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      status('This browser has no camera API.','err'); return;
+    }
+    status('Requesting camera…','busy');
+    getModel().then(function(){
+      return navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640}},audio:false});
+    }).then(function(s){
+      stream=s; vid.srcObject=s; vid.play();
+      vid.onloadedmetadata=function(){
+        live=true; hist=[]; elCam.textContent='Stop camera';
+        elName.textContent='camera.live';
+        status('Live. Detecting in real time. Nothing leaves your device.');
+        loop();
+      };
+    }).catch(function(e){
+      if(e && (e.name==='NotAllowedError'||e.name==='SecurityError')) status('Camera permission denied.','err');
+      else if(e && e.name==='NotFoundError') status('No camera found on this device.','err');
+      else fail();
+    });
+  }
+
+  elRun.addEventListener('click',runStill);
+  elCam.addEventListener('click',startCam);
   elPick.addEventListener('click',function(){ elFile.click(); });
-  elFile.addEventListener('change',function(e){
-    var f=e.target.files && e.target.files[0]; if(!f) return;
-    var r=new FileReader(); r.onload=function(ev){ load(ev.target.result, f.name.toLowerCase()); }; r.readAsDataURL(f);
-  });
+  function readFile(f){
+    if(!f||!/^image\//.test(f.type)) return;
+    var r=new FileReader(); r.onload=function(ev){ load(ev.target.result,f.name.toLowerCase()); };
+    r.readAsDataURL(f);
+  }
+  elFile.addEventListener('change',function(e){ readFile(e.target.files && e.target.files[0]); });
   ['dragenter','dragover'].forEach(function(t){
     elDrop.addEventListener(t,function(e){e.preventDefault();elDrop.classList.add('over');});
   });
   ['dragleave','drop'].forEach(function(t){
     elDrop.addEventListener(t,function(e){e.preventDefault();elDrop.classList.remove('over');});
   });
-  elDrop.addEventListener('drop',function(e){
-    var f=e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-    if(!f||!/^image\//.test(f.type)) return;
-    var r=new FileReader(); r.onload=function(ev){ load(ev.target.result, f.name.toLowerCase()); }; r.readAsDataURL(f);
-  });
+  elDrop.addEventListener('drop',function(e){ readFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]); });
+  window.addEventListener('beforeunload',stopCam);
 
   var hero=document.getElementById('heroImg');
   if(hero){ if(hero.complete){ load(hero.src,'portrait.jpg'); } else { hero.onload=function(){ load(hero.src,'portrait.jpg'); }; } }
+})();
+
+/* ---- navigation: filmstrip, track marker, palette, keyboard ---- */
+(function(){
+  var FRAMES=[
+    {id:'demo',n:'01',t:'Live demo'},
+    {id:'about',n:'02',t:'About'},
+    {id:'research',n:'03',t:'Research'},
+    {id:'work',n:'04',t:'Selected work'},
+    {id:'skills',n:'05',t:'Skills'},
+    {id:'experience',n:'06',t:'Experience'},
+    {id:'contact',n:'07',t:'Contact'}
+  ];
+  var ACTIONS=[
+    {t:'Download CV',h:'open',go:function(){window.open('ChandraKiranTeja_Resume.pdf','_blank','noopener');}},
+    {t:'Copy email address',h:'copy',go:function(){copy('chandrakiranteja@gmail.com');}},
+    {t:'GitHub profile',h:'open',go:function(){window.open('https://github.com/ckteja','_blank','noopener');}},
+    {t:'LinkedIn profile',h:'open',go:function(){window.open('https://www.linkedin.com/in/chandrakiranteja/','_blank','noopener');}},
+    {t:'Case study: DenseNet-Transformer',h:'page',go:function(){location.href='densenet-transformer.html';}},
+    {t:'Case study: Edge deployment',h:'page',go:function(){location.href='edge-detection.html';}},
+    {t:'Back to top',h:'jump',go:function(){window.scrollTo({top:0,behavior:'smooth'});}}
+  ];
+  function copy(txt){
+    if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt);
+    else { var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select();
+           try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+  }
+  var secs=FRAMES.map(function(f){return document.getElementById(f.id);});
+
+  /* filmstrip */
+  var stripIn=document.getElementById('stripIn'), strip=document.getElementById('strip');
+  FRAMES.forEach(function(f,i){
+    var c=document.createElement('button');
+    c.className='cell'; c.type='button'; c.dataset.i=i;
+    c.innerHTML='<span class="n">'+f.n+'</span>';
+    c.appendChild(document.createTextNode(f.t));
+    c.addEventListener('click',function(){ jump(i); });
+    stripIn.appendChild(c);
+  });
+  var cells=[].slice.call(stripIn.children);
+
+  var track=document.getElementById('track'), trackLbl=document.getElementById('trackLbl');
+  var cur=-1;
+  function jump(i){
+    if(!secs[i]) return;
+    window.scrollTo({top:secs[i].offsetTop-70,behavior:'smooth'});
+  }
+  function active(){
+    var y=window.scrollY+140, idx=-1;
+    secs.forEach(function(s,i){ if(s && s.offsetTop<=y) idx=i; });
+    if(idx!==cur){
+      cur=idx;
+      cells.forEach(function(c,i){ c.classList.toggle('on',i===cur); });
+      if(cur>=0){
+        trackLbl.textContent='TRACK '+FRAMES[cur].n+' · '+FRAMES[cur].t.toUpperCase();
+        track.classList.add('on');
+      } else track.classList.remove('on');
+    }
+    strip.classList.toggle('on', window.scrollY>420);
+  }
+  window.addEventListener('scroll',active,{passive:true});
+  window.addEventListener('resize',active); active();
+
+  /* command palette */
+  var pal=document.getElementById('pal'), palIn=document.getElementById('palIn'), palList=document.getElementById('palList');
+  var items=[], sel=0;
+  function build(q){
+    q=(q||'').toLowerCase().trim();
+    items=[];
+    FRAMES.forEach(function(f,i){
+      if(!q||(f.n+' '+f.t).toLowerCase().indexOf(q)>-1)
+        items.push({label:'Frame '+f.n+' · '+f.t,hint:'jump',go:function(){jump(i);}});
+    });
+    ACTIONS.forEach(function(a){
+      if(!q||a.t.toLowerCase().indexOf(q)>-1) items.push({label:a.t,hint:a.h,go:a.go});
+    });
+    sel=0; render();
+  }
+  function render(){
+    palList.innerHTML='';
+    items.forEach(function(it,i){
+      var li=document.createElement('li'); if(i===sel) li.className='sel';
+      var a=document.createElement('span'); a.textContent=it.label;
+      var b=document.createElement('span'); b.className='h'; b.textContent=it.hint;
+      li.appendChild(a); li.appendChild(b);
+      li.addEventListener('click',function(){ run(i); });
+      li.addEventListener('mousemove',function(){ if(sel!==i){sel=i;render();} });
+      palList.appendChild(li);
+    });
+  }
+  function run(i){ var it=items[i]; close(); if(it) setTimeout(it.go,60); }
+  function open(){ pal.classList.add('on'); palIn.value=''; build(''); palIn.focus(); }
+  function close(){ pal.classList.remove('on'); }
+  palIn.addEventListener('input',function(){ build(palIn.value); });
+  pal.addEventListener('click',function(e){ if(e.target===pal) close(); });
+
+  document.addEventListener('keydown',function(e){
+    var tag=(e.target.tagName||'').toLowerCase();
+    var typing=(tag==='input'||tag==='textarea');
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); pal.classList.contains('on')?close():open(); return; }
+    if(pal.classList.contains('on')){
+      if(e.key==='Escape'){ close(); }
+      else if(e.key==='ArrowDown'){ e.preventDefault(); sel=Math.min(sel+1,items.length-1); render(); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); sel=Math.max(sel-1,0); render(); }
+      else if(e.key==='Enter'){ e.preventDefault(); run(sel); }
+      return;
+    }
+    if(typing) return;
+    if(e.key==='j'||e.key==='J'){ jump(Math.min((cur<0?0:cur)+1,FRAMES.length-1)); }
+    else if(e.key==='k'||e.key==='K'){ jump(Math.max((cur<0?0:cur)-1,0)); }
+    else if(e.key==='/'){ e.preventDefault(); open(); }
+  });
+})();
+
+/* ---- BibTeX copy ---- */
+(function(){
+  var BIB={
+    p2025:'@inproceedings{teja2025densenet,\n  author    = {Teja, Chandra Kiran},\n  title     = {DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos},\n  booktitle = {IEEE International Conference on Advances in Electrical, Electronics, Communication, Computing and Automation (ICAECT)},\n  year      = {2025}\n}',
+    p2024:'@inproceedings{teja2024lrcn,\n  author    = {Teja, Chandra Kiran},\n  title     = {Action Recognition for Intelligent Surveillance Systems using LRCN with Attention Mechanisms},\n  booktitle = {IEEE International Conference on Advances in Electrical, Electronics, Communication, Computing and Automation (ICAECT)},\n  year      = {2024}\n}',
+    p2023:'@inproceedings{teja2023yolonas,\n  author    = {Teja, Chandra Kiran},\n  title     = {Enhancing Real-Time Human Tracking using YOLO-NAS and DeepSORT Fusion Models},\n  booktitle = {IEEE International Conference on Advances in Electrical, Electronics, Communication, Computing and Automation (ICAECT)},\n  year      = {2023}\n}'
+  };
+  [].slice.call(document.querySelectorAll('.cite')).forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=BIB[b.dataset.bib]; if(!t) return;
+      if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t);
+      else { var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select();
+             try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+      var old=b.textContent; b.textContent='copied ✓'; b.classList.add('done');
+      setTimeout(function(){ b.textContent=old; b.classList.remove('done'); },1600);
+    });
+  });
 })();
 
 (function(){

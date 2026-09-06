@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edge deployment · Case study · Chandra Kiran Teja</title>
+<meta name="description" content="Case study: deploying a YOLOv5 wildlife detector to an Nvidia Jetson Nano. Custom dataset collection, 15+ classes, 90% accuracy inside a 4 GB memory budget.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230C0D0F'/%3E%3Crect x='22' y='22' width='56' height='56' fill='none' stroke='%23E2A33E' stroke-width='7'/%3E%3C/svg%3E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Edge deployment · Case study">
+<meta property="og:description" content="A YOLOv5 wildlife detector running in real time on an Nvidia Jetson Nano.">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/91280385?v=4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#0C0D0F;--panel:#131519;--panel-2:#0F1114;--line:#22252B;--line-2:#2E323A;
+    --ink:#EDEBE6;--body:#B4B6BA;--muted:#83868D;--dim:#5C6067;--sig:#E2A33E;
+    --maxw:900px;
+    --f-display:"Newsreader",Georgia,serif;
+    --f-body:"IBM Plex Sans",system-ui,sans-serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;overflow-x:hidden;background:var(--ground);color:var(--body);font-family:var(--f-body);
+       font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:rgba(226,163,62,.16);color:var(--ink)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 34px}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(12,13,15,.9);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem}
+  .mark{font-family:var(--f-display);font-size:1.04rem;font-weight:600;color:var(--ink)}
+  .back{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);transition:color .18s}
+  .back:hover{color:var(--sig)}
+
+  header{padding:64px 0 44px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--f-mono);font-size:.71rem;letter-spacing:.13em;text-transform:uppercase;
+           color:var(--sig);margin-bottom:1.3rem}
+  h1{font-family:var(--f-display);font-weight:500;font-size:clamp(2.1rem,5vw,3.2rem);line-height:1.08;
+     letter-spacing:-.02em;color:var(--ink);margin:0 0 1.2rem;text-wrap:balance}
+  .lede{font-size:1.12rem;max-width:60ch;margin:0}
+  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin-top:2.2rem;
+        padding-top:1.4rem;border-top:1px solid var(--line)}
+  .meta .k{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;
+           color:var(--dim);display:block;margin-bottom:.3rem}
+  .meta .v{font-size:.92rem;color:var(--ink)}
+  @media(max-width:700px){.meta{grid-template-columns:repeat(2,1fr);gap:1rem}}
+
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  h2{font-family:var(--f-display);font-weight:500;font-size:1.6rem;letter-spacing:-.015em;
+     color:var(--ink);margin:0 0 1.1rem;text-wrap:balance}
+  h3{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+     color:var(--sig);margin:2rem 0 .7rem;font-weight:400}
+  p{margin:0 0 1.1rem;max-width:66ch}
+  p:last-child{margin-bottom:0}
+  strong{color:var(--ink);font-weight:600}
+  ul.pts{margin:0 0 1.1rem;padding:0;list-style:none;display:flex;flex-direction:column;gap:.55rem}
+  ul.pts li{padding-left:1.2rem;position:relative;max-width:66ch}
+  ul.pts li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;background:var(--line-2)}
+
+  figure.arch{margin:1.6rem 0 0;border:1px solid var(--line);background:var(--panel-2);
+              padding:1.1rem 1.2rem;overflow-x:auto}
+  figure.arch svg{display:block;min-width:640px;width:100%;height:auto}
+  figure.arch figcaption{font-family:var(--f-mono);font-size:.68rem;color:var(--dim);
+                         letter-spacing:.05em;text-transform:uppercase;margin-top:.85rem}
+  .ab{fill:var(--panel);stroke:var(--line-2);stroke-width:1}
+  .ab-hi{fill:none;stroke:var(--sig);stroke-width:1.4}
+  .at{fill:#EDEBE6;font-family:"IBM Plex Sans",sans-serif;font-size:12.5px}
+  .at-s{fill:#83868D;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em}
+  .at-a{fill:#E2A33E;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em}
+  .aln{stroke:var(--line-2);stroke-width:1.2;fill:none}
+  .aln-a{stroke:var(--sig);stroke-width:1.2;fill:none}
+
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);margin-top:1.2rem}
+  table{border-collapse:collapse;width:100%;min-width:520px;font-size:.9rem}
+  th{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;
+     color:var(--dim);text-align:left;padding:.75rem .9rem;border-bottom:1px solid var(--line-2);font-weight:400}
+  td{padding:.78rem .9rem;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  td.m{font-family:var(--f-mono);color:var(--sig);font-variant-numeric:tabular-nums;white-space:nowrap}
+  td.n{color:var(--ink)}
+
+  .btn{display:inline-block;font-family:var(--f-mono);font-size:.77rem;padding:.62rem 1.05rem;
+       border-radius:2px;border:1px solid var(--line-2);color:var(--ink);background:transparent;
+       cursor:pointer;transition:border-color .18s,color .18s;margin-right:.5rem;margin-top:.5rem}
+  .btn:hover{border-color:var(--sig);color:var(--sig)}
+
+  .pager{display:flex;justify-content:space-between;gap:1rem;padding:34px 0;flex-wrap:wrap}
+  .pager a{font-family:var(--f-mono);font-size:.76rem;color:var(--muted);transition:color .18s}
+  .pager a:hover{color:var(--sig)}
+  footer{padding:2.2rem 0 3rem;color:var(--dim);font-family:var(--f-mono);font-size:.73rem;
+         display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  footer a{border-bottom:1px solid var(--line)}
+  footer a:hover{color:var(--sig);border-color:var(--sig)}
+  figure.arch,.tbl-wrap{max-width:100%}
+  img,canvas,svg{max-width:100%}
+  section{scroll-margin-top:72px}
+  @media(max-width:700px){
+    figure.arch::before,.tbl-wrap::before{
+      content:"↔ swipe";display:block;position:sticky;left:0;
+      font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--dim);margin-bottom:.55rem}
+    .tbl-wrap::before{padding:.6rem .9rem 0}
+    .wrap{padding:0 20px}
+    header{padding:44px 0 34px}
+    section{padding:38px 0}
+    h1{font-size:2.1rem}
+    h2{font-size:1.4rem}
+    .lede{font-size:1.03rem}
+    .meta{grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.7rem}
+    figure.arch svg{min-width:540px}
+    table{min-width:460px}
+    .btn{padding:.82rem 1.05rem;display:inline-block}
+    .pager{flex-direction:column;gap:.7rem}
+    footer{flex-direction:column;gap:.5rem}
+  }
+  @media(max-width:430px){
+    .wrap{padding:0 16px}
+    h1{font-size:1.85rem}
+    .meta{grid-template-columns:1fr}
+  }
+  :focus-visible{outline:2px solid var(--sig);outline-offset:3px}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="mark" href="index.html">Chandra Kiran Teja</a>
+    <a class="back" href="index.html#work">← Back to selected work</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Case study · Frame 04.3</div>
+    <h1>A detector that had to live on 4 GB and a fence post.</h1>
+    <p class="lede">Deploying a YOLOv5 wildlife detector to an Nvidia Jetson Nano: collecting the dataset that didn't exist, then making the model small enough to run where the animals actually are.</p>
+    <div class="meta">
+      <div><span class="k">Role</span><span class="v">End to end</span></div>
+      <div><span class="k">Hardware</span><span class="v">Jetson Nano</span></div>
+      <div><span class="k">Classes</span><span class="v">15+ custom</span></div>
+      <div><span class="k">Result</span><span class="v">90% accuracy</span></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>The problem</h2>
+    <p>Animal intrusion onto farmland is a detection problem with an awkward constraint attached: the detection has to happen <strong>where there is no datacentre, and frequently no reliable network</strong>. Streaming video to a server for inference assumes bandwidth that a field boundary does not have, and adds latency to an alert whose entire value is being early.</p>
+    <p>So the model has to run on the device. That turns a straightforward computer vision task into a systems problem. The Nano offers a modest GPU and a shared memory budget, and every architectural choice is spent against it.</p>
+    <h3>And the data didn't exist</h3>
+    <p>General-purpose detection datasets contain a handful of animal categories, framed as photography: well-lit, centred, taken by someone who intended to photograph the animal. Surveillance footage is none of those things: it is off-angle, motion-blurred, badly lit, and the subject is often partially out of frame. A model trained on the former degrades sharply on the latter.</p>
+    <p>The dataset had to be <strong>collected and labelled from scratch, across 15+ classes</strong>, in conditions matching deployment.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>The approach</h2>
+    <h3>Model choice</h3>
+    <p><strong>YOLOv5</strong> was selected for a specific reason rather than familiarity: it is single-stage. Two-stage detectors propose regions and then classify them, which is accurate but spends inference budget twice. On constrained hardware, a single forward pass producing boxes and classes together is the difference between real-time and a slideshow. YOLOv5 also ships in several width and depth scales, which turns model size into a tunable dial rather than a fixed cost.</p>
+    <h3>Data pipeline</h3>
+    <p>Footage was captured in deployment-like conditions, then labelled across the target classes. Augmentation targeted the failure modes the environment actually produces (varied lighting, partial occlusion, scale variation as animals approach or retreat from the camera) rather than generic transforms.</p>
+    <h3>Deployment</h3>
+    <p>The trained model was then optimised for the Nano and run against a live camera feed on-device, so that a detection produces an alert locally without a round trip.</p>
+    <figure class="arch">
+      <svg viewBox="0 0 860 200" role="img" aria-label="Camera feed enters the Jetson Nano, is preprocessed, passes through the YOLOv5 detector, then postprocessing and non-maximum suppression, producing a local alert. Training and dataset collection happen off-device and produce the optimised model deployed to the Nano.">
+        <rect class="ab" x="8" y="72" width="92" height="46" rx="2"></rect>
+        <text class="at" x="24" y="93">Camera</text>
+        <text class="at-s" x="24" y="108">LIVE FEED</text>
+        <path class="aln" d="M100 95 H136"></path>
+
+        <rect class="ab-hi" x="136" y="34" width="480" height="124" rx="2"></rect>
+        <text class="at-a" x="152" y="54">NVIDIA JETSON NANO · ON-DEVICE</text>
+
+        <rect class="ab" x="156" y="72" width="104" height="46" rx="2"></rect>
+        <text class="at" x="172" y="93">Preprocess</text>
+        <text class="at-s" x="172" y="108">RESIZE · NORM</text>
+        <path class="aln" d="M260 95 H296"></path>
+
+        <rect class="ab" x="296" y="66" width="128" height="58" rx="2"></rect>
+        <text class="at" x="312" y="88">YOLOv5</text>
+        <text class="at-s" x="312" y="104">SINGLE-STAGE</text>
+        <text class="at-s" x="312" y="118">OPTIMISED</text>
+        <path class="aln" d="M424 95 H460"></path>
+
+        <rect class="ab" x="460" y="72" width="136" height="46" rx="2"></rect>
+        <text class="at" x="476" y="93">Postprocess</text>
+        <text class="at-s" x="476" y="108">NMS · THRESHOLD</text>
+
+        <path class="aln-a" d="M616 95 H656"></path>
+        <rect class="ab" x="656" y="72" width="96" height="46" rx="2"></rect>
+        <text class="at" x="672" y="93">Alert</text>
+        <text class="at-a" x="672" y="108">LOCAL</text>
+
+        <rect class="ab" x="156" y="166" width="200" height="30" rx="2"></rect>
+        <text class="at-s" x="172" y="185">CUSTOM DATASET · 15+ CLASSES</text>
+        <path class="aln" stroke-dasharray="3 4" d="M256 166 V140 M256 140 H360 M360 140 V124"></path>
+        <text class="at-s" x="376" y="188">TRAINED OFF-DEVICE, DEPLOYED ON</text>
+      </svg>
+      <figcaption>Detection runs entirely on the device, with no network round trip between camera and alert</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Results</h2>
+    <p>The deployed system reached <strong>90% accuracy across 15+ classes</strong> on the custom dataset, running on-device.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="n">Detector</td><td>YOLOv5, single-stage</td></tr>
+          <tr><td class="n">Target hardware</td><td>Nvidia Jetson Nano</td></tr>
+          <tr><td class="n">Classes</td><td class="m">15+</td></tr>
+          <tr><td class="n">Dataset</td><td>Custom, collected and labelled for deployment conditions</td></tr>
+          <tr><td class="n">Accuracy</td><td class="m">90%</td></tr>
+          <tr><td class="n">Inference location</td><td>On-device, no network dependency</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What edge deployment actually costs you</h2>
+    <ul class="pts">
+      <li><strong>Accuracy is traded, not preserved.</strong> Shrinking a model to fit a memory budget costs recall on small and distant objects first, which are exactly the early detections an alerting system most wants.</li>
+      <li><strong>Memory is shared.</strong> The Nano's CPU and GPU draw on the same pool, so the camera pipeline, preprocessing and the model compete rather than scale independently.</li>
+      <li><strong>Thermal and power limits are real.</strong> Sustained inference outdoors is a different workload from a benchmark run, and throttling shows up as dropped frames rather than an error.</li>
+      <li><strong>A custom dataset is a maintenance commitment.</strong> Every new species, camera angle or season is a labelling round, and the model quietly degrades until it happens.</li>
+      <li><strong>Threshold choice is a product decision.</strong> A false negative is a missed intrusion; a false positive is an alert nobody trusts by week three. Where that line sits isn't a modelling question.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     CHANDRA: fill these in. This is the material interviewers dig
+     into, and only you have it. Uncomment once written.
+       • measured FPS on the Nano, and the input resolution
+       • inference latency per frame, and model size after optimisation
+       • which YOLOv5 scale you used (n / s / m) and why
+       • whether you used TensorRT / FP16 quantisation, and what it bought
+       • the confusion pairs: which classes did it mix up?
+       • what failed in the field that never failed in testing
+     Delete this comment block once written.
+
+<section>
+  <div class="wrap">
+    <h2>Measured performance on device</h2>
+    <p>…</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What failed in the field</h2>
+    <p>…</p>
+  </div>
+</section>
+────────────────────────────────────────────────────────────── -->
+
+<section>
+  <div class="wrap">
+    <h2>Code</h2>
+    <p>Both repositories are public.</p>
+    <a class="btn" href="https://github.com/ckteja/Animal-Intrusion-Detection" target="_blank" rel="noopener">Detection repository →</a>
+    <a class="btn" href="https://github.com/ckteja/Jetson_AIDsys" target="_blank" rel="noopener">Jetson deployment →</a>
+  </div>
+</section>
+
+<div class="wrap pager">
+  <a href="densenet-transformer.html">← Previous case study: DenseNet-Transformer</a>
+  <a href="index.html#work">All work →</a>
+</div>
+
+<div class="wrap"><footer>
+  <span>© 2026 Chandra Kiran Teja</span>
+  <span>
+    <a href="https://www.linkedin.com/in/chandrakiranteja/" target="_blank" rel="noopener">LinkedIn</a> ·
+    <a href="https://github.com/ckteja" target="_blank" rel="noopener">GitHub</a> ·
+    <a href="mailto:chandrakiranteja@gmail.com">Email</a>
+  </span>
+</footer></div>
+
+</body>
+</html>

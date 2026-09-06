@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DenseNet-Transformer · Case study · Chandra Kiran Teja</title>
+<meta name="description" content="Case study: a hybrid DenseNet-Transformer architecture for human action recognition in video, published at IEEE ICAECT 2025.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230C0D0F'/%3E%3Crect x='22' y='22' width='56' height='56' fill='none' stroke='%23E2A33E' stroke-width='7'/%3E%3C/svg%3E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DenseNet-Transformer · Case study">
+<meta property="og:description" content="A hybrid architecture for human action recognition in video. IEEE ICAECT 2025.">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/91280385?v=4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#0C0D0F;--panel:#131519;--panel-2:#0F1114;--line:#22252B;--line-2:#2E323A;
+    --ink:#EDEBE6;--body:#B4B6BA;--muted:#83868D;--dim:#5C6067;--sig:#E2A33E;
+    --maxw:900px;
+    --f-display:"Newsreader",Georgia,serif;
+    --f-body:"IBM Plex Sans",system-ui,sans-serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;overflow-x:hidden;background:var(--ground);color:var(--body);font-family:var(--f-body);
+       font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:rgba(226,163,62,.16);color:var(--ink)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 34px}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(12,13,15,.9);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem}
+  .mark{font-family:var(--f-display);font-size:1.04rem;font-weight:600;color:var(--ink)}
+  .back{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);transition:color .18s}
+  .back:hover{color:var(--sig)}
+
+  header{padding:64px 0 44px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--f-mono);font-size:.71rem;letter-spacing:.13em;text-transform:uppercase;
+           color:var(--sig);margin-bottom:1.3rem}
+  h1{font-family:var(--f-display);font-weight:500;font-size:clamp(2.1rem,5vw,3.2rem);line-height:1.08;
+     letter-spacing:-.02em;color:var(--ink);margin:0 0 1.2rem;text-wrap:balance}
+  .lede{font-size:1.12rem;max-width:60ch;margin:0}
+  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin-top:2.2rem;
+        padding-top:1.4rem;border-top:1px solid var(--line)}
+  .meta .k{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;
+           color:var(--dim);display:block;margin-bottom:.3rem}
+  .meta .v{font-size:.92rem;color:var(--ink)}
+  @media(max-width:700px){.meta{grid-template-columns:repeat(2,1fr);gap:1rem}}
+
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  h2{font-family:var(--f-display);font-weight:500;font-size:1.6rem;letter-spacing:-.015em;
+     color:var(--ink);margin:0 0 1.1rem;text-wrap:balance}
+  h3{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+     color:var(--sig);margin:2rem 0 .7rem;font-weight:400}
+  p{margin:0 0 1.1rem;max-width:66ch}
+  p:last-child{margin-bottom:0}
+  strong{color:var(--ink);font-weight:600}
+  ul.pts{margin:0 0 1.1rem;padding:0;list-style:none;display:flex;flex-direction:column;gap:.55rem}
+  ul.pts li{padding-left:1.2rem;position:relative;max-width:66ch}
+  ul.pts li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;background:var(--line-2)}
+
+  figure.arch{margin:1.6rem 0 0;border:1px solid var(--line);background:var(--panel-2);
+              padding:1.1rem 1.2rem;overflow-x:auto}
+  figure.arch svg{display:block;min-width:660px;width:100%;height:auto}
+  figure.arch figcaption{font-family:var(--f-mono);font-size:.68rem;color:var(--dim);
+                         letter-spacing:.05em;text-transform:uppercase;margin-top:.85rem}
+  .ab{fill:var(--panel);stroke:var(--line-2);stroke-width:1}
+  .ab-hi{fill:none;stroke:var(--sig);stroke-width:1.4}
+  .at{fill:#EDEBE6;font-family:"IBM Plex Sans",sans-serif;font-size:12.5px}
+  .at-s{fill:#83868D;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em}
+  .at-a{fill:#E2A33E;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em}
+  .aln{stroke:var(--line-2);stroke-width:1.2;fill:none}
+  .aln-a{stroke:var(--sig);stroke-width:1.2;fill:none}
+
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);margin-top:1.2rem}
+  table{border-collapse:collapse;width:100%;min-width:520px;font-size:.9rem}
+  th{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;
+     color:var(--dim);text-align:left;padding:.75rem .9rem;border-bottom:1px solid var(--line-2);font-weight:400}
+  td{padding:.78rem .9rem;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  td.m{font-family:var(--f-mono);color:var(--sig);font-variant-numeric:tabular-nums;white-space:nowrap}
+  td.n{color:var(--ink)}
+
+  .cite-box{border:1px solid var(--line);background:var(--panel-2);padding:1.1rem 1.2rem;margin-top:1.2rem}
+  .cite-box p{font-size:.94rem;margin:0 0 .8rem}
+  .cite-box .venue{font-family:var(--f-mono);font-size:.72rem;color:var(--sig);letter-spacing:.05em}
+  .btn{display:inline-block;font-family:var(--f-mono);font-size:.77rem;padding:.62rem 1.05rem;
+       border-radius:2px;border:1px solid var(--line-2);color:var(--ink);background:transparent;
+       cursor:pointer;transition:border-color .18s,color .18s;margin-right:.5rem;margin-top:.5rem}
+  .btn:hover{border-color:var(--sig);color:var(--sig)}
+  .btn.solid{background:var(--sig);color:var(--ground);border-color:var(--sig)}
+  .btn.solid:hover{opacity:.86;color:var(--ground)}
+  .btn.done{border-color:var(--sig);color:var(--sig)}
+
+  .pager{display:flex;justify-content:space-between;gap:1rem;padding:34px 0;flex-wrap:wrap}
+  .pager a{font-family:var(--f-mono);font-size:.76rem;color:var(--muted);transition:color .18s}
+  .pager a:hover{color:var(--sig)}
+  footer{padding:2.2rem 0 3rem;color:var(--dim);font-family:var(--f-mono);font-size:.73rem;
+         display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  footer a{border-bottom:1px solid var(--line)}
+  footer a:hover{color:var(--sig);border-color:var(--sig)}
+  figure.arch,.tbl-wrap{max-width:100%}
+  img,canvas,svg{max-width:100%}
+  section{scroll-margin-top:72px}
+  @media(max-width:700px){
+    figure.arch::before,.tbl-wrap::before{
+      content:"↔ swipe";display:block;position:sticky;left:0;
+      font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--dim);margin-bottom:.55rem}
+    .tbl-wrap::before{padding:.6rem .9rem 0}
+    .wrap{padding:0 20px}
+    header{padding:44px 0 34px}
+    section{padding:38px 0}
+    h1{font-size:2.1rem}
+    h2{font-size:1.4rem}
+    .lede{font-size:1.03rem}
+    .meta{grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.7rem}
+    figure.arch svg{min-width:540px}
+    table{min-width:460px}
+    .btn{padding:.82rem 1.05rem;display:inline-block}
+    .pager{flex-direction:column;gap:.7rem}
+    footer{flex-direction:column;gap:.5rem}
+  }
+  @media(max-width:430px){
+    .wrap{padding:0 16px}
+    h1{font-size:1.85rem}
+    .meta{grid-template-columns:1fr}
+  }
+  :focus-visible{outline:2px solid var(--sig);outline-offset:3px}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="mark" href="index.html">Chandra Kiran Teja</a>
+    <a class="back" href="index.html#work">← Back to selected work</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Case study · Frame 04.1</div>
+    <h1>Giving a convolutional video model a memory.</h1>
+    <p class="lede">A hybrid DenseNet-Transformer architecture for human action recognition, pairing dense convolutional features with attention across time. Published at IEEE ICAECT 2025.</p>
+    <div class="meta">
+      <div><span class="k">Role</span><span class="v">Sole author</span></div>
+      <div><span class="k">Context</span><span class="v">B.Tech thesis</span></div>
+      <div><span class="k">Venue</span><span class="v">IEEE ICAECT 2025</span></div>
+      <div><span class="k">Result</span><span class="v">+5–7% accuracy</span></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>The problem</h2>
+    <p>Recognising a human action is not an image problem. A single frame of someone mid-motion is ambiguous: sitting down and standing up share almost every frame, and differ only in the <strong>order</strong> those frames arrive. Any model that classifies frames independently is guessing at the one thing that actually defines the action.</p>
+    <p>The standard fix is a convolutional backbone feeding a recurrent layer. That captures local temporal structure, but recurrence compresses history into a fixed hidden state and processes the sequence strictly in order, which makes long-range dependencies, such as the relationship between frame 2 and frame 40, progressively harder to preserve.</p>
+    <p>The question this work asked: <strong>if the temporal model could attend to every frame at once rather than remembering them in sequence, how much accuracy is recoverable?</strong></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>The approach</h2>
+    <p>The architecture splits the problem along the axis that matters: space is handled convolutionally, time is handled by attention.</p>
+    <h3>Spatial: DenseNet backbone</h3>
+    <p>Each sampled frame passes through a <strong>shared DenseNet</strong>. DenseNet's dense connectivity, where every layer receives the feature maps of all preceding layers, encourages feature reuse and keeps the parameter count lower than an equivalently deep plain CNN, which matters when the same backbone runs across every frame in a clip. The output is one feature vector per frame.</p>
+    <h3>Temporal: Transformer encoder</h3>
+    <p>Those per-frame vectors form a sequence. Positional encoding is added so ordering survives, and a <strong>Transformer encoder</strong> applies multi-head self-attention across the time axis. Every frame can attend to every other frame directly, in one step, rather than through a chain of recurrent updates. Temporal pooling collapses the attended sequence, and a classifier head produces the action label.</p>
+    <figure class="arch">
+      <svg viewBox="0 0 880 210" role="img" aria-label="Sampled video frames pass through a shared DenseNet backbone producing per-frame feature vectors; positional encoding is added and a Transformer encoder applies multi-head self-attention across time; temporal pooling and a classifier head emit the action label.">
+        <rect class="ab" x="8" y="40" width="34" height="30" rx="2"></rect>
+        <rect class="ab" x="8" y="76" width="34" height="30" rx="2"></rect>
+        <rect class="ab" x="8" y="112" width="34" height="30" rx="2"></rect>
+        <text class="at-s" x="8" y="162">FRAMES t₁…t𝑛</text>
+        <path class="aln" d="M42 55 H78 M42 91 H78 M42 127 H78"></path>
+        <rect class="ab" x="78" y="34" width="132" height="114" rx="2"></rect>
+        <text class="at" x="96" y="82">DenseNet</text>
+        <text class="at-s" x="96" y="99">SHARED BACKBONE</text>
+        <text class="at-s" x="96" y="115">SPATIAL FEATURES</text>
+        <path class="aln" d="M210 91 H248"></path>
+        <rect class="ab" x="248" y="62" width="128" height="58" rx="2"></rect>
+        <text class="at" x="266" y="86">Feature seq.</text>
+        <text class="at-a" x="266" y="103">+ POS. ENCODING</text>
+        <path class="aln-a" d="M376 91 H414"></path>
+        <rect class="ab-hi" x="414" y="34" width="176" height="114" rx="2"></rect>
+        <text class="at" x="432" y="60">Transformer</text>
+        <text class="at" x="432" y="78">encoder</text>
+        <text class="at-a" x="432" y="99">MULTI-HEAD ATTN</text>
+        <text class="at-s" x="432" y="115">ACROSS TIME</text>
+        <text class="at-s" x="432" y="131">FEED-FORWARD</text>
+        <path class="aln-a" d="M590 91 H628"></path>
+        <rect class="ab" x="628" y="62" width="118" height="58" rx="2"></rect>
+        <text class="at" x="646" y="86">Temporal</text>
+        <text class="at" x="646" y="104">pooling</text>
+        <path class="aln" d="M746 91 H784"></path>
+        <rect class="ab" x="784" y="68" width="88" height="46" rx="2"></rect>
+        <text class="at" x="800" y="88">Action</text>
+        <text class="at" x="800" y="104">label</text>
+        <text class="at-s" x="414" y="180">LONG-RANGE TEMPORAL DEPENDENCY THAT A PURE CONV STACK MISSES</text>
+        <path class="aln-a" stroke-dasharray="3 4" d="M502 148 V170"></path>
+      </svg>
+      <figcaption>DenseNet-Transformer: spatial features per frame, attention across the sequence</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Results</h2>
+    <p>The hybrid improved classification accuracy by <strong>5–7% over the baseline</strong> on video-based human action recognition, the margin that carried the work through IEEE peer review.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Configuration</th><th>Temporal model</th><th>Reported</th></tr></thead>
+        <tbody>
+          <tr><td class="n">Baseline</td><td>Convolutional only</td><td class="m">reference</td></tr>
+          <tr><td class="n">LRCN + attention</td><td>Recurrent + attention</td><td class="m">~87% (Kinetics)</td></tr>
+          <tr><td class="n">DenseNet-Transformer</td><td>Self-attention across time</td><td class="m">+5–7% vs baseline</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Why the gain is plausible</h3>
+    <p>Attention removes the sequential bottleneck. Where a recurrent layer must carry information about an early frame through every intermediate step, self-attention forms a direct path between any two frames. For actions whose defining evidence is separated in time, that path is the difference between a decision made on evidence and one made on a degraded summary of it.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Trade-offs this design accepts</h2>
+    <ul class="pts">
+      <li><strong>Attention costs quadratically in sequence length.</strong> Doubling the sampled frames roughly quadruples the attention computation, so frame sampling rate becomes an accuracy-versus-compute dial rather than a free parameter.</li>
+      <li><strong>Transformers are data-hungry.</strong> Self-attention carries far weaker inductive bias about locality than convolution, so it needs either more data or a pretrained backbone doing the heavy lifting on the spatial side.</li>
+      <li><strong>The backbone is shared but still per-frame.</strong> Spatial features are computed independently for every sampled frame, which dominates inference cost before attention is even reached.</li>
+      <li><strong>This is a clip-level classifier, not a detector.</strong> It answers "what action is in this clip", not "when did it start". Temporal localisation is a different problem.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     CHANDRA: add your own reflections here. This is the section
+     that will impress interviewers most, and only you can write it.
+     Uncomment and fill in. Suggested content:
+       • what you tried first that did NOT work
+       • the ablation: what happened without positional encoding?
+         with fewer attention heads? with a frozen backbone?
+       • the exact dataset, split and metric you reported
+       • what you would change if you rebuilt it today
+     Delete this comment block once written.
+
+<section>
+  <div class="wrap">
+    <h2>What didn't work</h2>
+    <p>…</p>
+    <h3>Ablation</h3>
+    <p>…</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What I'd do differently</h2>
+    <p>…</p>
+  </div>
+</section>
+────────────────────────────────────────────────────────────── -->
+
+<section>
+  <div class="wrap">
+    <h2>Publication</h2>
+    <div class="cite-box">
+      <p><strong>DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos</strong></p>
+      <p class="venue">C. K. TEJA · IEEE ICAECT · 2025</p>
+      <a class="btn" href="https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=DenseNet%20Transformer%20Human%20Action%20Recognition%20Videos" target="_blank" rel="noopener">IEEE Xplore →</a>
+      <button class="btn" id="bib" type="button">Copy BibTeX</button>
+    </div>
+  </div>
+</section>
+
+<div class="wrap pager">
+  <a href="index.html#work">← All work</a>
+  <a href="edge-detection.html">Next case study: Edge deployment →</a>
+</div>
+
+<div class="wrap"><footer>
+  <span>© 2026 Chandra Kiran Teja</span>
+  <span>
+    <a href="https://www.linkedin.com/in/chandrakiranteja/" target="_blank" rel="noopener">LinkedIn</a> ·
+    <a href="https://github.com/ckteja" target="_blank" rel="noopener">GitHub</a> ·
+    <a href="mailto:chandrakiranteja@gmail.com">Email</a>
+  </span>
+</footer></div>
+
+<script>
+document.getElementById('bib').addEventListener('click',function(){
+  var b=this;
+  var t='@inproceedings{teja2025densenet,\n  author    = {Teja, Chandra Kiran},\n  title     = {DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos},\n  booktitle = {IEEE International Conference on Advances in Electrical, Electronics, Communication, Computing and Automation (ICAECT)},\n  year      = {2025}\n}';
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t);
+  else { var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select();
+         try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+  b.textContent='Copied ✓'; b.classList.add('done');
+  setTimeout(function(){ b.textContent='Copy BibTeX'; b.classList.remove('done'); },1600);
+});
+</script>
+</body>
+</html>
