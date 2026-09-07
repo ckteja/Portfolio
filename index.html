@@ -1240,6 +1240,7 @@
     {t:'LinkedIn profile',h:'open',go:function(){window.open('https://www.linkedin.com/in/chandrakiranteja/','_blank','noopener');}},
     {t:'i-Brick pilot programme',h:'open',go:function(){window.open('https://ckteja.github.io/i-brick/','_blank','noopener');}},
     {t:'Case study: DenseNet-Transformer',h:'page',go:function(){location.href='densenet-transformer.html';}},
+    {t:'Case study: Few-shot object counter',h:'page',go:function(){location.href='few-shot-object-counter.html';}},
     {t:'Case study: Edge deployment',h:'page',go:function(){location.href='edge-detection.html';}},
     {t:'Back to top',h:'jump',go:function(){window.scrollTo({top:0,behavior:'smooth'});}}
   ];
@@ -1271,6 +1272,8 @@
   function active(){
     var y=window.scrollY+140, idx=-1;
     secs.forEach(function(s,i){ if(s && s.offsetTop<=y) idx=i; });
+    /* the last section sits below max scroll, so bottom-of-page counts as reaching it */
+    if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-2) idx=secs.length-1;
     if(idx!==cur){
       cur=idx;
       cells.forEach(function(c,i){
