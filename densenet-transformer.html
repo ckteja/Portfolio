@@ -171,7 +171,7 @@
       <div><span class="k">Context</span><span class="v">B.Tech thesis</span></div>
       <div><span class="k">Published</span><span class="v">IEEE peer-reviewed</span></div>
       <div><span class="k">Venue</span><span class="v">IEEE ICAECT 2025</span></div>
-      <div><span class="k">Result</span><span class="v">+5–7% accuracy</span></div>
+      <div><span class="k">Result</span><span class="v">93.75% UCF-101</span></div>
     </div>
   </div>
 </header>
@@ -234,14 +234,13 @@
 <section>
   <div class="wrap">
     <h2>Results</h2>
-    <p>The hybrid improved classification accuracy by <strong>5–7% over the baseline</strong> on video-based human action recognition, the margin that carried the work through IEEE peer review.</p>
+    <p>The published model reports <strong>93.75% accuracy on UCF-101</strong> and <strong>87.5% on Kinetics</strong>, the results that carried the work through IEEE peer review.</p>
     <div class="tbl-wrap">
       <table>
         <thead><tr><th>Configuration</th><th>Temporal model</th><th>Reported</th></tr></thead>
         <tbody>
           <tr><td class="n">Baseline</td><td>Convolutional only</td><td class="m">reference</td></tr>
-          <tr><td class="n">LRCN + attention</td><td>Recurrent + attention</td><td class="m">~87% (Kinetics)</td></tr>
-          <tr><td class="n">DenseNet-Transformer</td><td>Self-attention across time</td><td class="m">+5–7% vs baseline</td></tr>
+          <tr><td class="n">DenseNet-Transformer</td><td>Self-attention across time</td><td class="m">93.75% UCF-101 · 87.5% Kinetics</td></tr>
         </tbody>
       </table>
     </div>
@@ -295,7 +294,7 @@
     <h2>Publication</h2>
     <div class="cite-box">
       <p><strong>DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos</strong></p>
-      <p class="venue">C. K. TEJA · IEEE ICAECT · 2025</p>
+      <p class="venue">R. ATHILAKSHMI, L. G. P. INDUGAPALLI, A. BHUVAN SAI, C. K. T. MUDDANGULA · IEEE ICAECT · 2025</p>
       <a class="btn" href="https://ieeexplore.ieee.org/document/10958937/" target="_blank" rel="noopener">IEEE Xplore →</a>
       <button class="btn" id="bib" type="button">Copy BibTeX</button>
     </div>
@@ -319,7 +318,7 @@
 <script>
 document.getElementById('bib').addEventListener('click',function(){
   var b=this;
-  var t='@inproceedings{teja2025densenet,\n  author    = {Teja, Chandra Kiran},\n  title     = {DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos},\n  booktitle = {IEEE International Conference on Advances in Electrical, Computing, Communications and Sustainable Technologies (ICAECT)},\n  year      = {2025}\n}';
+  var t='@inproceedings{athilakshmi2025densenet,\n  author    = {R. Athilakshmi and Lakshmi Gnaneswara Prasadu Indugapalli and Anusuri Bhuvan Sai and M. Chandra Kiran Teja},\n  title     = {DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos},\n  booktitle = {IEEE International Conference on Advances in Electrical, Computing, Communications and Sustainable Technologies (ICAECT)},\n  year      = {2025},\n  doi       = {10.1109/ICAECT63952.2025.10958937}\n}';
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t);
   else { var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select();
          try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }

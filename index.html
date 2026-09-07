@@ -191,6 +191,8 @@
   ol.refs li::before{content:"[" counter(r) "]";position:absolute;left:0;top:1.55rem;font-family:var(--f-mono);font-size:.8rem;color:var(--sig)}
   ol.refs li:first-child::before{top:.25rem}
   .rt{font-family:var(--f-display);font-size:1.13rem;font-weight:500;color:var(--ink);line-height:1.35;margin:0 0 .4rem;max-width:calc(var(--measure) - 2.7rem)}
+  .ra{font-size:.84rem;color:var(--dim);margin:0 0 .45rem;line-height:1.5;max-width:calc(var(--measure) - 2.7rem)}
+  .ra b{color:var(--ink);font-weight:500}
   .rm{font-size:.88rem;color:var(--muted);margin:0 0 .5rem;max-width:calc(var(--measure) - 2.7rem)}
   .rm em{color:var(--body)}
   .rd{font-size:.96rem;margin:0 0 .6rem;max-width:calc(var(--measure) - 2.7rem)}
@@ -617,24 +619,27 @@
     <div class="marker"><span class="fnum">FRAME 03</span><span class="fname">Research</span><div class="tick"></div></div>
     <div class="reveal">
       <h2>Peer-reviewed publications</h2>
-      <p style="margin:0 0 1.6rem;max-width:var(--measure);color:var(--muted)">Three IEEE conference papers between 2023 and 2025, including presenting the work at the conference.</p>
+      <p style="margin:0 0 1.6rem;max-width:var(--measure);color:var(--muted)">Three IEEE conference papers, 2023 to 2025, with my research group at SRM University. I led the architecture design and implementation across all three, and presented the work at the conference.</p>
       <ol class="refs">
         <li>
           <p class="rt">DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos</p>
+          <p class="ra">R. Athilakshmi, L. G. P. Indugapalli, A. Bhuvan Sai, <b>Chandra Kiran Teja Muddangula</b></p>
           <p class="rm"><em>IEEE International Conference on Advances in Electrical, Computing, Communications and Sustainable Technologies (ICAECT)</em>, 2025.</p>
-          <p class="rd">A hybrid architecture pairing DenseNet feature extraction with Transformer blocks for video-based action recognition, improving classification accuracy by 5–7% over the baseline.</p>
+          <p class="rd">A hybrid architecture pairing DenseNet feature extraction with Transformer blocks for video-based action recognition. Reports 93.75% accuracy on UCF-101 and 87.5% on Kinetics.</p>
           <a class="rl" href="https://ieeexplore.ieee.org/document/10958937/" target="_blank" rel="noopener">IEEE Xplore →</a><button class="cite" type="button" data-bib="p2025">cite</button>
         </li>
         <li>
           <p class="rt">Action Recognition for Intelligent Surveillance System using LRCN with attention mechanisms</p>
+          <p class="ra">R. Athilakshmi, <b>Chandra Kiran Teja Muddangula</b>, V. Tummala, P. S. C. Sainagakrishna, S. C. Kota, V. J. Prasad</p>
           <p class="rm"><em>IEEE International Conference on Advances in Electrical, Computing, Communications and Sustainable Technologies (ICAECT)</em>, 2024.</p>
-          <p class="rd">An LRCN model augmented with attention for action classification in surveillance footage, reaching approximately 87% accuracy on the Kinetics dataset.</p>
+          <p class="rd">An LRCN model with a self-attention layer for action classification in surveillance footage, targeting long frame sequences, occlusion and lighting variation.</p>
           <a class="rl" href="https://ieeexplore.ieee.org/document/10469119/" target="_blank" rel="noopener">IEEE Xplore →</a><button class="cite" type="button" data-bib="p2024">cite</button>
         </li>
         <li>
           <p class="rt">Enhancing Real-Time Human Tracking using YOLONAS-DeepSort Fusion Models</p>
+          <p class="ra">R. Athilakshmi, P. S. C. Sainagakrishna, S. Kota, <b>Chandra Kiran Teja Muddangula</b>, T. Venkatesh, V. J. Prasad</p>
           <p class="rm"><em>IEEE International Conference on Electronics, Communication and Aerospace Technology (ICECA)</em>, 2023.</p>
-          <p class="rd">A tracking pipeline fusing YOLO-NAS detection with DeepSORT re-identification to maintain identity across frames in real-time environments.</p>
+          <p class="rd">A tracking pipeline fusing YOLO-NAS detection with DeepSORT re-identification. Reports above 90% detection accuracy on COCO-Persons, Football Players and CityPersons, with experiments run on a Jetson Nano.</p>
           <a class="rl" href="https://ieeexplore.ieee.org/document/10394864/" target="_blank" rel="noopener">IEEE Xplore →</a><button class="cite" type="button" data-bib="p2023">cite</button>
         </li>
       </ol>
@@ -693,7 +698,7 @@
       <h2>Systems built end to end</h2>
 
       <div class="proj">
-        <div class="ptop"><h3>Full-stack AI image analysis &amp; classification system</h3><span class="kind">M.Sc. · AI Engineering Lab</span></div>
+        <div class="ptop"><h3>Full-stack AI image analysis &amp; classification system</h3><span class="kind">M.Sc. · AI Engineering Lab · Winter 2025</span></div>
         <p>An end-to-end deployed system that segments, detects and classifies images using foundation models: SAM for segmentation, YOLO for detection, ViT for classification, combined through score fusion. Adds zero-shot and few-shot learning, tuned for low-memory environments, with Prometheus and Grafana monitoring across the inference stack.</p>
         <p class="stack"><b>Stack</b> &nbsp;SAM · YOLO · ViT · zero-shot / few-shot · score fusion · Prometheus · Grafana</p>
         <figure class="arch">
@@ -740,7 +745,7 @@
         <div class="ptop"><h3>DenseNet-Transformer for human action recognition</h3><span class="kind">B.Tech thesis · published</span></div>
         <p>Designed a hybrid model combining DenseNet convolutional features with Transformer layers to classify human actions in video, testing whether long-range temporal attention could recover what pure convolutional stacks miss.</p>
         <div class="metrics">
-          <div class="metric"><div class="v">+5–7%</div><div class="k">accuracy over baseline</div></div>
+          <div class="metric"><div class="v">93.75%</div><div class="k">UCF-101, published</div></div>
           <div class="metric"><div class="v">2025</div><div class="k">IEEE ICAECT</div></div>
         </div>
         <p class="stack"><b>Stack</b> &nbsp;PyTorch · DenseNet · Transformers · video pipelines</p>
@@ -810,9 +815,8 @@
           <caption class="sr-only">Reported results across projects</caption>
           <thead><tr><th>Model</th><th>Task</th><th>Data</th><th>Hardware</th><th>Reported</th></tr></thead>
           <tbody>
-            <tr><td class="n">DenseNet-Transformer</td><td>Action recognition</td><td>Video, thesis set</td><td>GPU</td><td class="m">+5–7% vs baseline</td></tr>
-            <tr><td class="n">LRCN + attention</td><td>Action recognition</td><td>Kinetics</td><td>GPU</td><td class="m">~87% accuracy</td></tr>
-            <tr><td class="n">YOLO-NAS + DeepSORT</td><td>Detection &amp; tracking</td><td>Real-time video</td><td>GPU</td><td class="m">real-time ID retention</td></tr>
+            <tr><td class="n">DenseNet-Transformer</td><td>Action recognition</td><td>UCF-101, Kinetics</td><td>GPU</td><td class="m">93.75% · 87.5%</td></tr>
+            <tr><td class="n">YOLO-NAS + DeepSORT</td><td>Detection &amp; tracking</td><td>COCO-Persons, CityPersons</td><td>Jetson Nano</td><td class="m">&gt;90% detection</td></tr>
             <tr><td class="n">YOLOv5</td><td>Wildlife detection</td><td>Custom, 15+ classes</td><td>Jetson Nano</td><td class="m">90% accuracy</td></tr>
             <tr><td class="n">YOLOv5</td><td>Object detection</td><td>Client data, internship</td><td>GPU</td><td class="m">&gt;90% accuracy</td></tr>
           </tbody>
@@ -1345,9 +1349,9 @@
 /* ---- BibTeX copy ---- */
 (function(){
   var BIB={
-    p2025:'@inproceedings{teja2025densenet,\n  author    = {Teja, Chandra Kiran},\n  title     = {DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos},\n  booktitle = {IEEE International Conference on Advances in Electrical, Computing, Communications and Sustainable Technologies (ICAECT)},\n  year      = {2025}\n}',
-    p2024:'@inproceedings{teja2024lrcn,\n  author    = {Teja, Chandra Kiran},\n  title     = {Action Recognition for Intelligent Surveillance System using LRCN with attention mechanisms},\n  booktitle = {IEEE International Conference on Advances in Electrical, Computing, Communications and Sustainable Technologies (ICAECT)},\n  year      = {2024}\n}',
-    p2023:'@inproceedings{teja2023yolonas,\n  author    = {Teja, Chandra Kiran},\n  title     = {Enhancing Real-Time Human Tracking using YOLONAS-DeepSort Fusion Models},\n  booktitle = {IEEE International Conference on Electronics, Communication and Aerospace Technology (ICECA)},\n  year      = {2023}\n}'
+    p2025:'@inproceedings{athilakshmi2025densenet,\n  author    = {R. Athilakshmi and Lakshmi Gnaneswara Prasadu Indugapalli and Anusuri Bhuvan Sai and M. Chandra Kiran Teja},\n  title     = {DenseNet-Transformer Model: A Hybrid Architecture for Improved Human Action Recognition in Videos},\n  booktitle = {IEEE International Conference on Advances in Electrical, Computing, Communications and Sustainable Technologies (ICAECT)},\n  year      = {2025},\n  doi       = {10.1109/ICAECT63952.2025.10958937}\n}',
+    p2024:'@inproceedings{athilakshmi2024lrcn,\n  author    = {R. Athilakshmi and Chandra Kiran Teja Muddangula and Venkatesh Tummala and Pulavarthi Sri Chandan Sainagakrishna and Sri Chaitanya Kota and V. Jothi Prasad},\n  title     = {Action Recognition for Intelligent Surveillance System using LRCN with attention mechanisms},\n  booktitle = {IEEE International Conference on Advances in Electrical, Computing, Communications and Sustainable Technologies (ICAECT)},\n  year      = {2024},\n  doi       = {10.1109/ICAECT60202.2024.10469119}\n}',
+    p2023:'@inproceedings{athilakshmi2023yolonas,\n  author    = {R. Athilakshmi and Pulavarthi Sri Chandan Sainagakrishna and Srinath Kota and M. Chandra Kiran Teja and Tummala Venkatesh and V. Jothi Prasad},\n  title     = {Enhancing Real-Time Human Tracking using YOLONAS-DeepSort Fusion Models},\n  booktitle = {IEEE International Conference on Electronics, Communication and Aerospace Technology (ICECA)},\n  year      = {2023},\n  doi       = {10.1109/ICECA58529.2023.10394864}\n}'
   };
   [].slice.call(document.querySelectorAll('.cite')).forEach(function(b){
     b.addEventListener('click',function(){
