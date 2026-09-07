@@ -678,7 +678,7 @@
           <input type="file" id="dmFile" accept="image/*" hidden>
           <video id="dmVideo" playsinline muted aria-hidden="true"></video>
           <div class="drop" id="dmDrop">or drop an image here</div>
-          <div class="status" id="dmStatus" role="status" aria-live="polite">Ready. COCO-SSD, 80 classes.</div>
+          <div class="status" id="dmStatus" role="status" aria-live="polite">Ready. COCO-SSD, 80 classes. First run downloads about 7 MB.</div>
 
           <div class="telem" id="dmTelem">
             <div class="telem-h">Inference telemetry</div>
@@ -1139,7 +1139,7 @@
     var n=new Image();
     n.onload=function(){
       img=n; drawBase(); elName.textContent=name; elCount.textContent='–';
-      elMs.textContent='idle'; elOut.innerHTML=''; status('Ready. COCO-SSD, 80 classes.');
+      elMs.textContent='idle'; elOut.innerHTML=''; status('Ready. COCO-SSD, 80 classes. First run downloads about 7 MB.');
     };
     n.onerror=function(){ status('Could not read that image.','err'); };
     n.src=src;
@@ -1230,30 +1230,6 @@
   window.addEventListener('resize',function(){ sizeSpark(); drawSpark(); });
   var hero=document.getElementById('heroImg');
   if(hero){ if(hero.complete){ load(hero.src,'portrait.jpg'); } else { hero.onload=function(){ load(hero.src,'portrait.jpg'); }; } }
-
-  /* Run the still detection once when the section first scrolls into view, so the
-     claim above the canvas proves itself without a click. Skipped when the visitor
-     asked for reduced motion, is on a metered or slow link, or has no observer. */
-  (function(){
-    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var conn=navigator.connection||{};
-    var slow=conn.saveData===true||/(^|-)2g$/.test(conn.effectiveType||'');
-    var sec=document.getElementById('demo');
-    if(reduce||slow||!sec||!('IntersectionObserver' in window)) return;
-    var fired=false, tries=0;
-    function go(){
-      if(live||busy) return;
-      if(!img){ if(++tries>20) return; setTimeout(go,250); return; }
-      runStill();
-    }
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(!e.isIntersecting||fired) return;
-        fired=true; io.disconnect(); setTimeout(go,350);
-      });
-    },{threshold:.35});
-    io.observe(sec);
-  })();
 })();
 
 /* ---- navigation: filmstrip, track marker, palette, keyboard ---- */
