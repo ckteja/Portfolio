@@ -148,12 +148,17 @@
     html.js .fade{opacity:1!important;transform:none!important;transition:none!important}
     ul.pts li:hover,.btn:active{transform:none}
   }
+  .skip{position:fixed;left:8px;top:-64px;z-index:100;background:var(--sig);color:var(--ground);
+        font-family:var(--f-mono);font-size:.78rem;padding:.62rem 1rem;border-radius:2px;transition:top .18s}
+  .skip:focus{top:8px}
+  @media(prefers-reduced-motion:reduce){.skip{transition:none}}
   :focus-visible{outline:2px solid var(--sig);outline-offset:3px}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 <script>document.documentElement.className+=' js';</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <nav>
   <div class="wrap nav-in">
@@ -162,6 +167,7 @@
   </div>
 </nav>
 
+<main id="main">
 <header>
   <div class="wrap">
     <div class="eyebrow fade" style="--d:40ms">Case study · Frame 04.1</div>
@@ -300,6 +306,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <div class="wrap pager">
   <a href="index.html#work">← All work</a>
