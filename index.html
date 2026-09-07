@@ -67,6 +67,9 @@
     --f-mono:"IBM Plex Mono",ui-monospace,monospace;
     color-scheme:dark;
   }
+  /* Accent rule: --sig marks interactive and active things, plus mono system
+     labels (frame numbers, eyebrows). Data values and prose use --ink, so amber
+     text on this page reliably means "you can click or it is current". */
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
@@ -215,7 +218,13 @@
   .repo:hover{border-color:var(--sig)}
 
   /* skills */
-  .skills{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem 2.6rem;max-width:var(--measure)}
+  /* each skill cluster points at the work on this page that actually used it */
+  .skill .uses{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.03em;line-height:1.75;
+               color:var(--dim);margin:.7rem 0 0}
+  .skill .uses a{color:var(--muted);border-bottom:1px solid var(--line);
+          transition:color var(--t1) var(--e-io),border-color var(--t1) var(--e-io)}
+  .skill .uses a:hover{color:var(--sig);border-color:var(--sig)}
+  .skills{display:grid;grid-template-columns:repeat(2,1fr);gap:1.9rem 2.6rem;max-width:var(--measure)}
   .skill h3{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin:0 0 .45rem;font-weight:400}
   .skill p{font-size:.97rem;color:var(--ink);margin:0;line-height:1.6}
   @media(max-width:640px){.skills{grid-template-columns:1fr;gap:1.3rem}}
@@ -225,7 +234,7 @@
   .role:first-child{border-top:0;padding-top:0}
   .role .when{font-family:var(--f-mono);font-size:.76rem;color:var(--dim);line-height:1.65}
   .role h3{font-family:var(--f-display);font-weight:500;font-size:1.14rem;color:var(--ink);margin:0 0 .15rem;max-width:calc(var(--measure) - 140px - 1.8rem)}
-  .role .org{font-size:.91rem;color:var(--sig);margin:0 0 .7rem;max-width:calc(var(--measure) - 140px - 1.8rem)}
+  .role .org{font-size:.91rem;color:var(--ink);margin:0 0 .7rem;max-width:calc(var(--measure) - 140px - 1.8rem)}
   .role ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.4rem}
   .role li{font-size:.96rem;padding-left:1.1rem;position:relative;max-width:calc(var(--measure) - 140px - 1.8rem)}
   .role li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;background:var(--line-2)}
@@ -318,7 +327,7 @@
                color:var(--dim);text-align:left;padding:.75rem .9rem;border-bottom:1px solid var(--line-2);font-weight:400}
   table.res td{padding:.8rem .9rem;border-bottom:1px solid var(--line);color:var(--body);vertical-align:top}
   table.res tr:last-child td{border-bottom:0}
-  table.res td.m{font-family:var(--f-mono);color:var(--sig);font-variant-numeric:tabular-nums;white-space:nowrap}
+  table.res td.m{font-family:var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
   table.res td.n{color:var(--ink)}
 
   /* architecture diagrams */
@@ -429,6 +438,7 @@
     ol.refs li{padding-left:0}
     ol.refs li::before{position:static;display:block;margin-bottom:.4rem}
     .cite{margin-left:0;margin-top:.6rem;display:inline-block}
+    .skill .uses{line-height:2}
     /* WCAG 2.5.8: 24px hit area for small inline links, without moving them */
     .repo,.rl,.foot a{position:relative}
     .repo::after,.rl::after,.foot a::after{content:"";position:absolute;
@@ -843,11 +853,15 @@
     <div class="reveal">
       <h2>Tools and methods</h2>
       <div class="skills">
+        <div class="skill"><h3>Machine learning</h3><p>PyTorch, TensorFlow, scikit-learn, NumPy, Pandas</p>
+          <p class="uses">PyTorch in the <a href="densenet-transformer.html">DenseNet-Transformer</a> and the <a href="few-shot-object-counter.html">few-shot counter</a>. TensorFlow in the <a href="#experience">Resolute AI internship</a>.</p></div>
+        <div class="skill"><h3>Computer vision</h3><p>OpenCV, YOLO / YOLO-NAS, DeepSORT, SAM, ViT, DenseNet, LRCN</p>
+          <p class="uses">Across <a href="#research">all three IEEE papers</a>, the <a href="edge-detection.html">Jetson deployment</a>, and the <a href="#demo">detector running on this page</a>.</p></div>
+        <div class="skill"><h3>Deployment &amp; monitoring</h3><p>Nvidia Jetson Nano, embedded sensor nodes, model optimisation, Prometheus, Grafana</p>
+          <p class="uses">Jetson in the <a href="edge-detection.html">wildlife detector</a>. Sensor nodes in <a href="#venture">i-Brick</a>. Grafana in the <a href="few-shot-object-counter.html">few-shot counter</a>.</p></div>
+        <div class="skill"><h3>Research areas</h3><p>Human action recognition, multi-object tracking, edge deployment, zero-shot and few-shot learning</p>
+          <p class="uses">Recognition and tracking in <a href="#research">the papers</a>. Few-shot in the <a href="few-shot-object-counter.html">object counter</a>.</p></div>
         <div class="skill"><h3>Languages</h3><p>Python, C, C++, SQL</p></div>
-        <div class="skill"><h3>Machine learning</h3><p>PyTorch, TensorFlow, scikit-learn, NumPy, Pandas</p></div>
-        <div class="skill"><h3>Computer vision</h3><p>OpenCV, YOLO / YOLO-NAS, DeepSORT, SAM, ViT, DenseNet, LRCN</p></div>
-        <div class="skill"><h3>Deployment &amp; monitoring</h3><p>Nvidia Jetson Nano, embedded sensor nodes, model optimisation, Prometheus, Grafana</p></div>
-        <div class="skill"><h3>Research areas</h3><p>Human action recognition, multi-object tracking, edge deployment, zero-shot and few-shot learning</p></div>
         <div class="skill"><h3>Tools</h3><p>Git, Linux, Jupyter, Google Colab</p></div>
       </div>
     </div>
