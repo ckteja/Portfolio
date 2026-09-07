@@ -326,5 +326,56 @@ if(document.readyState==='complete')requestAnimationFrame(s);
 else window.addEventListener('load',function(){requestAnimationFrame(s);});
 setTimeout(s,1200);})();
 </script>
+<script>
+/* ---- architecture diagrams draw themselves once, left to right, on first view ---- */
+(function(){
+  var svgs=[].slice.call(document.querySelectorAll('figure.arch svg'));
+  if(!svgs.length) return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* if we cannot animate safely, leave the finished diagram exactly as it is */
+  if(reduce||!('IntersectionObserver' in window)) return;
+
+  var E_IO='cubic-bezier(.65,0,.35,1)', E_OUT='cubic-bezier(.16,1,.3,1)', SPAN=820;
+
+  function prep(svg){
+    var vb=(svg.getAttribute('viewBox')||'').split(/[\s,]+/).map(Number);
+    var W=vb[2]>0?vb[2]:880, parts=[];
+    [].slice.call(svg.querySelectorAll('rect,text,path,line,circle,polygon')).forEach(function(el){
+      var bb; try{ bb=el.getBBox(); }catch(e){ return; }
+      /* a path that already carries a dash pattern would lose it if we drew it */
+      var drawable=(el.tagName==='path'||el.tagName==='line')&&!el.hasAttribute('stroke-dasharray');
+      var len=0;
+      if(drawable&&el.getTotalLength){ try{ len=el.getTotalLength(); }catch(e){ len=0; } }
+      var d=Math.round((Math.max(0,bb.x)/W)*SPAN);
+      if(len>0){
+        el.style.strokeDasharray=len+'px';
+        el.style.strokeDashoffset=len+'px';
+        el.style.transition='stroke-dashoffset 420ms '+E_IO+' '+d+'ms';
+        parts.push({el:el,draw:true});
+      }else{
+        el.style.opacity='0';
+        el.style.transition='opacity 380ms '+E_OUT+' '+(d+90)+'ms';
+        parts.push({el:el,draw:false});
+      }
+    });
+    svg.__play=function(){
+      parts.forEach(function(p){
+        if(p.draw) p.el.style.strokeDashoffset='0px';
+        else p.el.style.opacity='1';
+      });
+    };
+  }
+
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      if(!e.isIntersecting) return;
+      io.unobserve(e.target);
+      if(e.target.__play) e.target.__play();
+    });
+  },{threshold:.15});
+
+  svgs.forEach(function(s){ prep(s); io.observe(s); });
+})();
+</script>
 </body>
 </html>
