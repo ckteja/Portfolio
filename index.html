@@ -124,8 +124,16 @@
     .proof li{padding:0;border-left:0}
     .proof b{font-size:1.3rem}
     .proof span{font-size:.6rem;line-height:1.35;letter-spacing:.05em}
+    .eyebrow::after{display:none}
     .masthead .cta{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
     .masthead .cta .btn{text-align:center}
+  }
+  /* three columns of stats do not fit a phone: one per row, label beside value */
+  @media(max-width:520px){
+    .proof{grid-template-columns:1fr;gap:.7rem}
+    .proof li{flex-direction:row;align-items:baseline;gap:.7rem}
+    .proof b{font-size:1.22rem;min-width:3.5rem}
+    .proof span{font-size:.72rem;line-height:1.45;letter-spacing:.06em;align-self:baseline}
   }
   .cta{display:flex;flex-wrap:wrap;gap:.65rem}
   .btn{font-family:var(--f-mono);font-size:.79rem;padding:.7rem 1.12rem;border-radius:2px;border:1px solid var(--line-2);color:var(--ink);background:transparent;transition:border-color .18s,color .18s}
@@ -421,7 +429,14 @@
     .tbl-wrap::before{padding:.6rem .9rem 0}
     .wrap{padding-left:20px;padding-right:20px}
     .strip-in{padding:.5rem 16px;gap:.4rem}
-    .cell{font-size:.66rem;padding:.42rem .62rem}
+    .cell{font-size:.7rem;padding:.46rem .66rem}
+    .fact .k{font-size:.72rem}
+    .telem-h{font-size:.71rem}
+    table.res th{font-size:.7rem}
+    .telem-f{font-size:.7rem}
+    .metric .k{font-size:.72rem}
+    .kind{font-size:.72rem}
+    figure.arch figcaption{font-size:.72rem}
     .sec{padding-top:36px;padding-bottom:36px}
     .masthead{padding:44px 0 40px}
     .frame{max-width:100%}
@@ -439,7 +454,7 @@
     ol.refs li{padding-left:0}
     ol.refs li::before{position:static;display:block;margin-bottom:.4rem}
     .cite{margin-left:0;margin-top:.6rem;display:inline-block}
-    .skill .uses{line-height:2}
+    .skill .uses{line-height:2;font-size:.72rem}
     /* WCAG 2.5.8: 24px hit area for small inline links, without moving them */
     .repo,.rl,.foot a{position:relative}
     .repo::after,.rl::after,.foot a::after{content:"";position:absolute;
@@ -1311,7 +1326,9 @@
         track.classList.add('on');
       } else track.classList.remove('on');
     }
-    strip.classList.toggle('on', window.scrollY>420);
+    /* below 900px the nav links are hidden, so the filmstrip is the only way to
+       move between frames: keep it available from the top rather than after a scroll */
+    strip.classList.toggle('on', window.scrollY>420 || window.innerWidth<=900);
   }
   var rafA=null;
   function onScrollA(){ if(rafA) return; rafA=requestAnimationFrame(function(){ rafA=null; active(); }); }
