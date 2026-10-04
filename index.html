@@ -63,7 +63,7 @@
     --ink:#EDEBE6;
     --body:#B8B6AF;
     --muted:#A49F94;
-    --dim:#877F71;
+    --dim:#938B7C;
     --sig:#E2A33E;
     --sig-dim:rgba(226,163,62,.16);
     --e-out:cubic-bezier(.16,1,.3,1);
@@ -497,13 +497,170 @@
     a{color:#000;text-decoration:underline}
     figure.arch{break-inside:avoid;border-color:#ccc}
   }
+
+  /* ================================================================
+     LIGHTING: ambient wash, grain, specular edges, torch, live playhead
+
+     The page is an edit suite, so light behaves like light. One soft
+     source that moves with the playhead, panel edges lit on the side
+     facing it, and a static grain so the large dark fields are not
+     flat. No backdrop-filter on anything that carries text: a blurred
+     backdrop makes the effective background variable, and contrast
+     then cannot be guaranteed. All of this paints behind content,
+     so no text sits on top of an unknown colour.
+
+     Peak ambient alpha is capped at .060. At that cap the darkest
+     mono label on the page (--dim) still measures above 4.5:1
+     against the lit, grained ground. Raising the cap breaks that.
+     ================================================================ */
+
+  /* --- 1. ambient wash -------------------------------------------
+     Two layers cross-fade, because a gradient cannot be transitioned
+     in CSS but an opacity can. JS writes the gradient on the idle
+     layer, then swaps which one is lit. */
+  .amb{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .amb i{position:absolute;inset:0;display:block;opacity:0;
+         transition:opacity 900ms linear}
+  .amb i.on{opacity:1}
+
+  /* --- 2. static film grain --------------------------------------
+     Inside .amb, so it grains the ground and leaves type crisp.
+     Never animated: moving grain is a battery and vestibular cost
+     for an effect nobody asked for. */
+  .amb .grain{position:absolute;inset:0;display:block;opacity:.028;
+    background-repeat:repeat;background-size:160px 160px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E")}
+
+  /* --- 3. specular edges ----------------------------------------
+     What reads as glass is the lit edge, not the blur. One hairline
+     gradient inside the top of each panel, brightest on the side the
+     light comes from. It sits in the padding box, never under text. */
+  .frame,.telem,.pal-box,.cell{position:relative}
+  .frame::before,.telem::before,.pal-box::before,.cell::before{
+    content:"";position:absolute;left:0;right:0;top:0;height:1px;pointer-events:none;
+    background:linear-gradient(90deg,
+      rgba(237,235,230,0) 0%,
+      rgba(237,235,230,.26) 16%,
+      rgba(237,235,230,.09) 52%,
+      rgba(237,235,230,0) 92%)}
+  .cell::before{background:linear-gradient(90deg,
+      rgba(237,235,230,0) 0%,rgba(237,235,230,.17) 30%,rgba(237,235,230,0) 100%)}
+
+  /* The diagram box, the results table and the citation box are the largest
+     panels on the site. Below 700px their ::before already carries the
+     "swipe" hint, so the edge only lights from 701px up, where that hint
+     does not exist. */
+  @media(min-width:701px){
+    figure.arch,.tbl-wrap,.cite-box{position:relative}
+    figure.arch::before,.tbl-wrap::before,.cite-box::before{
+      content:"";position:absolute;left:0;right:0;top:0;height:1px;pointer-events:none;
+      background:linear-gradient(90deg,
+        rgba(237,235,230,0) 0%,
+        rgba(237,235,230,.24) 16%,
+        rgba(237,235,230,.08) 52%,
+        rgba(237,235,230,0) 92%)}
+  }
+
+  /* the divider between cards is the same light falling across a seam */
+  .proj,.role{position:relative}
+  .proj::before,.role::before,ol.refs li::after{
+    content:"";position:absolute;left:0;right:0;top:-1px;height:1px;pointer-events:none;
+    background:linear-gradient(90deg,
+      rgba(237,235,230,.17) 0%,rgba(237,235,230,.045) 38%,rgba(237,235,230,0) 76%)}
+  .proj:first-child::before,.role:first-child::before,ol.refs li:first-child::after{display:none}
+
+  /* --- 4. torch --------------------------------------------------
+     On a fine pointer the cursor lights the card and reveals a faint
+     blueprint grid beneath it, like putting a light on a schematic.
+     Mouse only: a phone has no cursor to follow, and a touch device
+     would just paint a glow wherever the last tap landed. */
+  @media(hover:hover) and (pointer:fine){
+    html.js .proj,html.js .skill,html.js .role,html.js .frame,html.js .telem,
+    html.js figure.arch{
+      position:relative;isolation:isolate;--mx:50%;--my:50%}
+    html.js .proj::after,html.js .skill::after,html.js .role::after,
+    html.js .frame::after,html.js .telem::after,html.js figure.arch::after{
+      content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;
+      transition:opacity var(--t2) var(--e-io);
+      background:radial-gradient(220px 220px at var(--mx) var(--my),
+        rgba(226,163,62,.10) 0%,rgba(226,163,62,.03) 45%,rgba(226,163,62,0) 72%)}
+    html.js .proj:hover::after,html.js .skill:hover::after,html.js .role:hover::after,
+    html.js .frame:hover::after,html.js .telem:hover::after,
+    html.js figure.arch:hover::after{opacity:1}
+
+    /* the grid is masked to the torch radius. Without mask support the
+       grid would cover the whole card, so the plain glow is the fallback. */
+    @supports ((mask-image:radial-gradient(#000,transparent)) or (-webkit-mask-image:radial-gradient(#000,transparent))){
+      html.js .proj::after,html.js .skill::after,html.js .role::after,
+      html.js .frame::after,html.js .telem::after,html.js figure.arch::after{
+        background:
+          linear-gradient(to right,rgba(226,163,62,.15) 0 1px,rgba(0,0,0,0) 1px 100%) 0 0/22px 22px,
+          linear-gradient(to bottom,rgba(226,163,62,.15) 0 1px,rgba(0,0,0,0) 1px 100%) 0 0/22px 22px,
+          radial-gradient(220px 220px at var(--mx) var(--my),
+            rgba(226,163,62,.11) 0%,rgba(226,163,62,.03) 48%,rgba(226,163,62,0) 74%);
+        -webkit-mask-image:radial-gradient(200px 200px at var(--mx) var(--my),
+          #000 0%,rgba(0,0,0,.4) 46%,rgba(0,0,0,0) 70%);
+        mask-image:radial-gradient(200px 200px at var(--mx) var(--my),
+          #000 0%,rgba(0,0,0,.4) 46%,rgba(0,0,0,0) 70%)}
+    }
+  }
+
+  /* --- 5. the playhead is a control, not only a readout ----------
+     Click or drag the top bar to seek. Fine pointers only: a stray
+     thumb at the top edge of a phone should never throw the page.
+     WCAG 2.5.8 is met by the equivalent-control exception. The nav
+     links, the filmstrip cells and the command palette all move you
+     between frames and all clear 24px. */
+  .scrub-tip{position:fixed;top:12px;left:0;z-index:81;pointer-events:none;opacity:0;
+    transform:translate(-50%,-4px);
+    display:flex;gap:.5rem;align-items:baseline;white-space:nowrap;
+    background:rgba(12,13,15,.95);border:1px solid var(--line-2);padding:.3rem .52rem;
+    font-family:var(--f-mono);font-size:.64rem;letter-spacing:.07em;
+    transition:opacity var(--t1) var(--e-io),transform var(--t1) var(--e-out)}
+  .scrub-tip.on{opacity:1;transform:translate(-50%,0)}
+  .scrub-tip b{color:var(--sig);font-weight:400;font-variant-numeric:tabular-nums}
+  .scrub-tip span{color:var(--muted);text-transform:uppercase}
+
+  @media(hover:hover) and (pointer:fine){
+    html.js .scrub{cursor:ew-resize;transition:height var(--t1) var(--e-io)}
+    /* the grab strip reaches below the 2px bar without covering any nav
+       control: the CV button's top edge sits at about 19px */
+    html.js .scrub::after{content:"";position:absolute;left:0;right:0;top:0;height:16px}
+    html.js .scrub:hover,html.js .scrub.drag{height:6px}
+    html.js .scrub:hover i,html.js .scrub.drag i{position:relative}
+    html.js .scrub:hover i::after,html.js .scrub.drag i::after{
+      content:"";position:absolute;right:-1px;top:-3px;width:2px;height:12px;background:var(--sig)}
+  }
+  @media(hover:none),(pointer:coarse){.scrub{pointer-events:none}}
+
+  /* --- reduced motion -------------------------------------------
+     The wash stops cross-fading and the torch stops following, but
+     the lit edges stay: they are static and carry no movement. */
+  @media(prefers-reduced-motion:reduce){
+    .amb i{transition:none}
+    .proj::after,.skill::after,.role::after,.frame::after,.telem::after,
+    figure.arch::after{display:none}
+    .scrub,.scrub-tip{transition:none}
+    .scrub-tip{display:none}
+  }
+
+  @media print{
+    .amb,.scrub-tip{display:none!important}
+    .frame::before,.telem::before,.pal-box::before,.cell::before,
+    .proj::before,.role::before,ol.refs li::after,
+    .proj::after,.skill::after,.role::after,.frame::after,.telem::after,
+    figure.arch::before,figure.arch::after,.tbl-wrap::before,.cite-box::before{display:none!important}
+  }
 </style>
 <script>document.documentElement.className+=' js';</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<div class="scrub"><i id="ph"></i></div>
+<div class="amb" id="amb" aria-hidden="true"><i></i><i></i><span class="grain"></span></div>
+
+<div class="scrub" id="scrub" aria-hidden="true"><i id="ph"></i></div>
+<div class="scrub-tip" id="scrubTip" aria-hidden="true"><b id="stipTc">00:00:00:00</b><span id="stipSec">Top</span></div>
 
 <div class="track" id="track" aria-hidden="true"><div class="box"></div><span id="trackLbl">TRACK 01 · DEMO</span></div>
 
@@ -1311,7 +1468,7 @@
     c.addEventListener('click',function(){ jump(i); });
     stripIn.appendChild(c);
   });
-  var cells=[].slice.call(stripIn.children);
+  var cells=[].slice.call(stripIn.querySelectorAll('.cell'));
 
   var track=document.getElementById('track'), trackLbl=document.getElementById('trackLbl');
   var cur=-1;
@@ -1561,6 +1718,150 @@
       }catch(err){}
     }
   },true);
+})();
+</script>
+<script>
+/* ---- lighting: the ambient source follows the playhead, the cursor is a
+        torch, and the top bar can be scrubbed ---------------------------- */
+(function(){
+  var mq=window.matchMedia?function(q){return window.matchMedia(q).matches;}:function(){return false;};
+  var reduce=mq('(prefers-reduced-motion: reduce)');
+  var fine=mq('(hover:hover) and (pointer:fine)');
+
+  /* read the frames off the page rather than keeping a second list in sync */
+  var SECS=[].slice.call(document.querySelectorAll('main > section[id]')).map(function(s){
+    var n=s.querySelector('.marker .fname');
+    return {el:s,name:n?n.textContent.trim():s.id};
+  });
+  /* Which frame is current at a given scroll top. Same 140px line and same
+     bottom-of-page rule the filmstrip already uses, so the light, the TRACK
+     label and the lit cell all change at the same moment.
+     -1 means "above the first frame", i.e. still on the masthead. */
+  var LINE=140;
+  function frameAt(top,atBottom){
+    var y=top+LINE, i=-1, k;
+    for(k=0;k<SECS.length;k++){ if(SECS[k].el.offsetTop<=y) i=k; }
+    /* the last frame sits below max scroll, so the bottom counts as reaching it */
+    if(atBottom) i=SECS.length-1;
+    return i;
+  }
+  function atBottom(){
+    return window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-2;
+  }
+
+  /* ---- 1. ambient wash ------------------------------------------------
+     One source per frame. Warm where the work is physical, cooler where
+     it is academic. Alpha never exceeds .060: see the note in the CSS. */
+  var GRADES=[
+    {c:'226,163,62', a:.052, x:'22%', y:'-8%'},  /* masthead  */
+    {c:'230,170,80', a:.048, x:'16%', y:'-4%'},  /* 01 about  */
+    {c:'226,163,62', a:.060, x:'80%', y:'-2%'},  /* 02 venture, the build */
+    {c:'116,146,190',a:.052, x:'14%', y:'0%' },  /* 03 research, cooler   */
+    {c:'226,163,62', a:.058, x:'50%', y:'-6%'},  /* 04 demo, centre stage */
+    {c:'222,158,70', a:.054, x:'76%', y:'-2%'},  /* 05 work    */
+    {c:'126,150,180',a:.048, x:'20%', y:'0%' },  /* 06 skills  */
+    {c:'206,160,96', a:.044, x:'72%', y:'-2%'},  /* 07 experience */
+    {c:'226,163,62', a:.056, x:'42%', y:'4%' }   /* 08 contact */
+  ];
+  var amb=document.getElementById('amb');
+  var layers=amb?[].slice.call(amb.querySelectorAll('i')):[];
+  var live=0, shown=-1;
+  function wash(i){
+    if(layers.length<2||i===shown) return;
+    shown=i;
+    var g=GRADES[Math.max(0,Math.min(GRADES.length-1,i))];
+    var next=layers[live^1];
+    next.style.backgroundImage='radial-gradient(130% 80% at '+g.x+' '+g.y+
+      ',rgba('+g.c+','+g.a+') 0%,rgba('+g.c+',0) 64%)';
+    layers[live].classList.remove('on');
+    next.classList.add('on');
+    live^=1;
+  }
+  if(layers.length>1){
+    var rafW=null;
+    var washTick=function(){
+      if(rafW) return;
+      rafW=requestAnimationFrame(function(){
+        rafW=null;
+        wash(frameAt(window.scrollY,atBottom())+1);
+      });
+    };
+    window.addEventListener('scroll',washTick,{passive:true});
+    window.addEventListener('resize',washTick);
+    washTick();
+  }
+
+  /* ---- 4. torch -------------------------------------------------------
+     Writes the pointer position into --mx/--my for the CSS to light.
+     One rAF per frame regardless of how fast the mouse moves. */
+  if(fine&&!reduce&&document.documentElement.classList.contains('js')){
+    var cards=[].slice.call(document.querySelectorAll('.proj,.skill,.role,.frame,.telem'));
+    var want=null,rafT=null;
+    var paint=function(){
+      rafT=null;
+      if(!want) return;
+      want.el.style.setProperty('--mx',want.x+'px');
+      want.el.style.setProperty('--my',want.y+'px');
+      want=null;
+    };
+    cards.forEach(function(el){
+      el.addEventListener('pointermove',function(e){
+        if(e.pointerType&&e.pointerType!=='mouse') return;
+        var r=el.getBoundingClientRect();
+        want={el:el,x:Math.round(e.clientX-r.left),y:Math.round(e.clientY-r.top)};
+        if(!rafT) rafT=requestAnimationFrame(paint);
+      },{passive:true});
+    });
+  }
+
+  /* ---- 5. scrubbing the playhead --------------------------------------
+     The bar already reads out scroll position as a 24fps timecode. Here it
+     also accepts one: click or drag to seek, with the timecode and the
+     frame name under the cursor. */
+  var scrub=document.getElementById('scrub'), tip=document.getElementById('scrubTip');
+  var tipTc=document.getElementById('stipTc'), tipSec=document.getElementById('stipSec');
+  if(scrub&&tip&&fine){
+    var TOTAL_FRAMES=1440; /* 60s at 24fps, top to bottom, same as the readout */
+    var pad2=function(n){ return (n<10?'0':'')+n; };
+    var span=function(){ return Math.max(1,document.documentElement.scrollHeight-window.innerHeight); };
+    var fracOf=function(x){ return Math.max(0,Math.min(1,x/Math.max(1,window.innerWidth))); };
+    var dragging=false;
+
+    function readout(x){
+      var f=fracOf(x), fr=Math.round(f*TOTAL_FRAMES), s=Math.floor(fr/24);
+      tipTc.textContent='00:'+pad2(Math.floor(s/60))+':'+pad2(s%60)+':'+pad2(fr%24);
+      var i=frameAt(f*span(),f>=0.999);
+      tipSec.textContent=i<0?'Top':SECS[i].name;
+      /* keep the whole tag on screen at both ends */
+      tip.style.left=Math.round(Math.max(64,Math.min(window.innerWidth-64,x)))+'px';
+      tip.classList.add('on');
+    }
+    /* scrubbing is instant by design: a scrubber that eases is a scrollbar
+       that lies about where you are */
+    function seek(x){ window.scrollTo({top:fracOf(x)*span(),behavior:'auto'}); }
+    function stop(e){
+      if(!dragging) return;
+      dragging=false; scrub.classList.remove('drag');
+      if(e&&e.pointerId!=null){ try{ scrub.releasePointerCapture(e.pointerId); }catch(err){} }
+      tip.classList.remove('on');
+    }
+
+    scrub.addEventListener('pointerenter',function(e){ readout(e.clientX); });
+    scrub.addEventListener('pointermove',function(e){
+      readout(e.clientX);
+      if(dragging) seek(e.clientX);
+    });
+    scrub.addEventListener('pointerleave',function(){ if(!dragging) tip.classList.remove('on'); });
+    scrub.addEventListener('pointerdown',function(e){
+      if(e.button!==0) return;
+      dragging=true; scrub.classList.add('drag');
+      try{ scrub.setPointerCapture(e.pointerId); }catch(err){}
+      seek(e.clientX); readout(e.clientX);
+      e.preventDefault();
+    });
+    scrub.addEventListener('pointerup',stop);
+    scrub.addEventListener('pointercancel',stop);
+  }
 })();
 </script>
 </body>
